@@ -3,8 +3,6 @@
 "use strict";
 
 (function stikyElement() {
-  "use strict";
-
   var elStart, elEnd, elStartTop, elementsHeight, elEndTop;
   var fixedClass = "sticky-element--fixed";
 
@@ -35,7 +33,7 @@
   }
 
   function setStickyClass() {
-    var scrollTop = document.body.scrollTop;
+    var scrollTop = getScrollY();
 
     if (scrollTop > elStartTop && scrollTop < elEndTop) {
       elStart.classList.add(fixedClass);
@@ -63,7 +61,9 @@
 
   link.addEventListener("click", function (e) {
     e.preventDefault();
-    document.body.scrollTop = 0;
+    // document.body.scrollTop = 0;
+    // window.scrollTo(0, 0);
+    scrollBy(0, 6000);
   });
 })();
 
@@ -77,8 +77,9 @@
   }
 
   var toc = Array.from(links);
+  // var ids = toc.map(el => el.href.split('#')[1]).reverse();
   var ids = toc.map(function (el) {
-    return el.href.split("#")[1];
+    return el.getAttribute("href").split("#")[1];
   }).reverse();
   var offsets;
   var activeClass = "active";
@@ -86,7 +87,7 @@
   initialize();
 
   function setActiveClass() {
-    var scrollTop = document.body.scrollTop;
+    var scrollTop = getScrollY();
 
     var current = offsets.find(function (element, index) {
       return element <= scrollTop;
@@ -134,3 +135,34 @@
   window.addEventListener("resize", initialize);
   // console.log(ids, offsets);
 })();
+
+/**
+ * Get current scroll y position
+ */
+function getScrollY() {
+  return document.body.scrollTop || // deprecated
+  window.scrollY || window.pageYOffset; // IE11
+}
+
+/**
+ * Scrolls to `baseY` in `duration` ms
+ * @param baseY
+ * @param duration
+ */
+function scrollBy(baseY, duration) {
+
+  var initialY = getScrollY();
+  // var y = initialY + distance;
+  // var baseY = (initialY + y) * 0.5;
+  var difference = initialY - baseY;
+  var startTime = performance.now();
+
+  function step() {
+    var normalizedTime = (performance.now() - startTime) / duration;
+    if (normalizedTime > 1) normalizedTime = 1;
+    var newY = baseY + difference * Math.cos(normalizedTime * Math.PI);
+    window.scrollTo(0, newY);
+    if (normalizedTime < 1 && newY > 0) window.requestAnimationFrame(step);
+  }
+  window.requestAnimationFrame(step);
+}
