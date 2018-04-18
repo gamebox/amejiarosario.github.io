@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://adrianmejia.com/"/>
-  <updated>2018-04-18T20:02:35.187Z</updated>
+  <updated>2018-04-18T20:52:19.000Z</updated>
   <id>http://adrianmejia.com/</id>
   
   <author>
@@ -20,10 +20,12 @@
     <link href="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/"/>
     <id>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</id>
     <published>2018-04-04T20:16:07.000Z</published>
-    <updated>2018-04-18T20:02:35.187Z</updated>
+    <updated>2018-04-18T20:52:19.000Z</updated>
     
     <content type="html"><![CDATA[<p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to make people save them time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
-<p>However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course. This post is the first of series of tutorial about Data Structures and Algorithms (DSA):</p>
+<p>However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course.</p>
+<a id="more"></a>
+<p>This post is the first of series of tutorial about Data Structures and Algorithms (DSA):</p>
 <ul>
 <li>Algorithms time complexity and Growth rate of functions.</li>
 <li>7 most popular running times of algorithms with examples.</li>
@@ -226,7 +228,8 @@ Are you ready to become a super programmer and scale your code?! <img src="/imag
     
     <summary type="html">
     
-      &lt;p&gt;As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software t
+      &lt;p&gt;As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to make people save them time to do other amazing things. Whatever you do it has the potential to impact people around you.&lt;/p&gt;
+&lt;p&gt;However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course.&lt;/p&gt;
     
     </summary>
     
