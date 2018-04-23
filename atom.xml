@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://adrianmejia.com/"/>
-  <updated>2018-04-23T18:49:13.006Z</updated>
+  <updated>2018-04-23T19:26:02.000Z</updated>
   <id>http://adrianmejia.com/</id>
   
   <author>
@@ -16,15 +16,20 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>8 time complexities that every developer should know</title>
-    <link href="http://adrianmejia.com/blog/2018/04/05/big-o-notation-and-time-complexity-to-speed-up-your-algorithms/"/>
-    <id>http://adrianmejia.com/blog/2018/04/05/big-o-notation-and-time-complexity-to-speed-up-your-algorithms/</id>
+    <title>8 time complexities that every programmer should know</title>
+    <link href="http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/"/>
+    <id>http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/</id>
     <published>2018-04-05T20:10:09.000Z</published>
-    <updated>2018-04-23T18:49:13.006Z</updated>
+    <updated>2018-04-23T19:26:02.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Summary">Summary<a href="#Summary" class="headerlink" title="Summary"></a></h1><p>We are going to learn the top algorithm’s running time that every developer should be familiar. Knowing these time complexities will help you to assess if your code will scale. Also, it’s handy to compare different solutions for the same problem. You would be able to estimate which one will perform better.</p>
 <a id="more"></a>
-<p>In the previous post, we saw how Alan Turing save millions of lives with an optimized algorithm. In most common cases, fast algorithms can save you time, money and enabled new technology. So, It is paramount to know how to measure algorithms performance.</p>
+<p>This post is part of a serie of the Data Structures and Algorithms (DSA) for Beginners:</p>
+<ol>
+<li><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Algorithm’s time complexity and Big O notation</a></li>
+<li>[Eight most popular running times of algorithms with examples] <strong>👈 you are here</strong></li>
+</ol>
+<p>In the <a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">previous post</a>, we saw how Alan Turing save millions of lives with an optimized algorithm. In most common cases, fast algorithms can save you time, money and enabled new technology. So, It is paramount to know how to measure algorithms performance.</p>
 <p>To recap <strong>time complexity</strong> estimates how well an algorithm performs regardless kind of machine is run on. You can obtain the time complexity by counting the number of elementary operations performed by your code. This time complexity is expressed as a function of the input size <code>n</code> using Big-O notation. <code>n</code> indicates the size of the input while O is the growth rate function.</p>
 <p>The Big-O notation is used to classify algorithms based on their running time or space (memory used) as the input grows. The <code>O</code> function is the growth rate in function of the input size <code>n</code>.</p>
 <p>Before we dive in, here is the <strong>big O cheatsheet</strong> and examples that we are going to cover on this post:</p>
@@ -360,15 +365,15 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
     <link href="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/"/>
     <id>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</id>
     <published>2018-04-04T20:16:07.000Z</published>
-    <updated>2018-04-23T18:49:13.007Z</updated>
+    <updated>2018-04-23T19:24:31.000Z</updated>
     
     <content type="html"><![CDATA[<p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to make people save them time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
 <p>However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course.</p>
 <a id="more"></a>
-<p>This post is the first of series of tutorial about Data Structures and Algorithms (DSA):</p>
+<p>This post is part of a serie of the Data Structures and Algorithms (DSA) for Beginners:</p>
 <ol>
-<li>Algorithms time complexity and Growth rate of functions. <strong>👈 you are here</strong></li>
-<li>Seven most popular running times of algorithms with examples. <em>(coming soon)</em></li>
+<li>Algorithm’s time complexity and Big O notation <strong>👈 you are here</strong></li>
+<li><a href="/blog/2018/04/05/big-o-notation-and-time-complexity-to-speed-up-your-algorithms/">Eight most popular running times of algorithms with examples</a></li>
 </ol>
 <p>First, let’s see one real story to drive this point home.</p>
 <h1 id="An-algorithm-that-saved-millions-of-lives">An algorithm that saved millions of lives<a href="#An-algorithm-that-saved-millions-of-lives" class="headerlink" title="An algorithm that saved millions of lives"></a></h1><p>During War World II the Germans used AM signals to communicate with troops around Europe. Anybody with an AM radio and some knowledge of Morse code could intercept the message. However, the information was encoded! All attacked countries tried to decoded by hand. Sometimes they got lucky and were able to make sense of a couple of messages at the end of the day. Unfortunately, The Nazis changed the encoding every single day!</p>
@@ -564,6 +569,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
 <p>As you can see, some algorithms are very time-consuming. An input size as little as 100, it is impossible to compute even if we had a 1 PHz (1 million GHz) CPU!! Hardware does not scale as well as software.</p>
 <p>In the next post, we are going to explore all of these time complexities with a code example or two!
 Are you ready to become a super programmer and scale your code?! <img src="/images/superman_shield.svg" width="25" height="25" alt="superman shield" style="display:inline-block;"></p>
+<p><strong>Continue with the next part 👉</strong> <a href="/blog/2018/04/05/big-o-notation-and-time-complexity-to-speed-up-your-algorithms/">Eight running times that every programmer should know</a></p>
 ]]></content>
     
     <summary type="html">
@@ -3157,6 +3163,10 @@ for(c=0; c&lt;n; c++){
 </table>
 
 <p>That’s all for this first part 1. I will continue publishing this tutorials every week or so. Stay tune!</p>
+<p><hr>
+<strong>Update</strong></p>
+<p> Checkout out the next post clicking here: <a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Data Structures and Algorithms (DSA) for Beginners</a></p>
+<hr>
 ]]></content>
     
     <summary type="html">
