@@ -42,8 +42,8 @@
     <meta property="og:url" content="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/" />
     <meta property="og:site_name" content="Adrian Mejia Blog" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to make people save them time to do other amazing things. Whatever you do it has the potential to impact people around you.
-However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course." />
+    <meta property="og:description" content="As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.
+However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course." />
     <meta property="og:image" content="http://adrianmejia.com/images/data-structures-algorithms-time-complexity-big-o-notation-large.jpg" />
     <meta property="og:title" content="How you can change the world by learning Data Structures and Algorithms" />
     <meta property="fb:app_id" content="761831487293468" />
@@ -258,7 +258,7 @@ ga('send', 'pageview');
   },
   
   "datePublished": "2018-04-04T16:16:07-04:00",
-  "dateModified": "2018-04-23T15:24:31-04:00",
+  "dateModified": "2018-04-24T16:25:41-04:00",
   "author": {
     "@type": "Person",
     "name": "Adrian Mejia"
@@ -273,8 +273,8 @@ ga('send', 'pageview');
       "height": 50
     }
   },
-  "description": "As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to make people save them time to do other amazing things. Whatever you do it has the potential to impact people around you.
-However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course."
+  "description": "As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.
+However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course."
 }
 </script>
 
@@ -290,7 +290,7 @@ However, these accomplishments are only possible if we write software that is fa
       <span title="Last time this post was updated">
         <i class="fa fa-calendar" aria-hidden="true"></i>
         Last update
-        <time datetime="2018-04-23T19:24:31.000Z" itemprop="dateUpdated">April 23rd 2018</time>
+        <time datetime="2018-04-24T20:25:41.100Z" itemprop="dateUpdated">April 24th 2018</time>
       </span>
 
       
@@ -324,31 +324,38 @@ However, these accomplishments are only possible if we write software that is fa
     <section class="col-sm-8 p-x-2">
 
       <div class="post-content  toc-content ">
-        <p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to make people save them time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
-<p>However, these accomplishments are only possible if we write software that is fast and can scale. Learn how to measure your code is the goal of this online course.</p>
+        <p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
+<p>However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course.</p>
 <a id="more"></a>
-<p>This post is part of a serie of the Data Structures and Algorithms (DSA) for Beginners:</p>
+<p>This post is part of a series of the Data Structures and Algorithms (DSA) for Beginners:</p>
 <ol>
 <li>Algorithm’s time complexity and Big O notation <strong>👈 you are here</strong></li>
-<li><a href="/blog/2018/04/05/big-o-notation-and-time-complexity-to-speed-up-your-algorithms/">Eight most popular running times of algorithms with examples</a></li>
+<li><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a></li>
+<li>Analysis of recursive algorithms (coming soon)</li>
 </ol>
-<p>First, let’s see one real story to drive this point home.</p>
-<h1 id="An-algorithm-that-saved-millions-of-lives">An algorithm that saved millions of lives<a href="#An-algorithm-that-saved-millions-of-lives" class="headerlink" title="An algorithm that saved millions of lives"></a></h1><p>During War World II the Germans used AM signals to communicate with troops around Europe. Anybody with an AM radio and some knowledge of Morse code could intercept the message. However, the information was encoded! All attacked countries tried to decoded by hand. Sometimes they got lucky and were able to make sense of a couple of messages at the end of the day. Unfortunately, The Nazis changed the encoding every single day!</p>
-<p>A math genius called Alan Turing joined the British military to crack the German “Enigma” code. He knew they would never get ahead if they keep doing the calculations by pen and paper. So after many months of hard work, they built a machine. It took more than a day to decode a message! So, it was useless.</p>
+<p>We are going to explore how you can measure your code performance using analysis of algorithms: <strong>time complexity</strong> and <strong>big O notation</strong>. However, first, let’s see a real story to learn why is this important.</p>
+<h1 id="An-algorithm-that-saved-millions-of-lives">An algorithm that saved millions of lives<a href="#An-algorithm-that-saved-millions-of-lives" class="headerlink" title="An algorithm that saved millions of lives"></a></h1><p>During War World II the Germans used <abbr title="AM broadcasting is a radio broadcasting technology, which employs amplitude modulation transmissions.">AM</abbr> signals to communicate with troops around Europe. Anybody with an AM radio and some knowledge of Morse code could intercept the message. However, the information was encoded! All attacked countries tried to decoded by hand. Sometimes they got lucky and were able to make sense of a couple of messages at the end of the day. Unfortunately, The Nazis changed the encoding every single day!</p>
+<p>A math genius called Alan Turing joined the British military to crack the German “Enigma” code. He knew they would never get ahead if they keep doing the calculations by pen and paper. So after many months of hard work, they built a machine. It took more than a day to decode a message! So, it was useless :(</p>
 <p>Alan’s team found out that every encrypted message ended with the same string: “Hail Hitler” Aha!! After changing the algorithm, the machine was used to save millions of lives!</p>
 <blockquote>
 <p>The same machine that was going to get shut down as a failure became a live saver. Likewise, you can do way more with your computing resources when you write efficient code. That is what we are going to learn in this course!</p>
 </blockquote>
+<p>Another popular algorithm is <code>PageRank</code> developed in 1988 by Sergey Brin and Larry Page (Google founders). This algorithm was (and is) used by Google search engine to make sense of trillions of web pages. Google was not the only search engine, however, since their algorithm returns better results most of the competitors faded away. Today it powers most of 3 billion daily searches very quickly. That is the power of algorithms that scale! 🏋🏻‍</p>
 <h1 id="So-why-should-you-learn-to-write-efficient-algorithms">So, why should you learn to write efficient algorithms?<a href="#So-why-should-you-learn-to-write-efficient-algorithms" class="headerlink" title="So, why should you learn to write efficient algorithms?"></a></h1><p>There are many advantages; these are just some of them:</p>
 <ul>
 <li>Crush job interviews and land the tech job of your dreams.</li>
-<li>You would become a much better developer.</li>
+<li>You would become a much better software developer.</li>
 <li>Spend less time debugging, optimizing and re-writing code.</li>
 <li>Your software will run faster with the same hardware.</li>
 <li>Your programs might be used to aid discoveries that save millions of lives.</li>
+<li>Outperform competitors!</li>
 </ul>
-<p>Without further ado, Let’s save the world!</p>
-<h1 id="What-are-algorithms">What are algorithms?<a href="#What-are-algorithms" class="headerlink" title="What are algorithms?"></a></h1><p>Algorithms are steps of how to do some task. When you cook, you follow a recipe (or algorithms) to prepare a dish. If you play a game, you are devising strategies (or algorithms) to help you win. Likewise, algorithms in computers are a set of instructions used to solve a problem. There are “good” algorithms and “bad” algorithms. The good ones are fast; the bad ones are slow. Slow algorithms cost more money and make some calculations impossible in our lifespan!</p>
+<p>Without further ado, let’s save the world!</p>
+<h1 id="What-are-algorithms">What are algorithms?<a href="#What-are-algorithms" class="headerlink" title="What are algorithms?"></a></h1><p>Algorithms are steps of how to do some task. When you cook, you follow a recipe (or algorithms) to prepare a dish. If you play a game, you are devising strategies (or algorithms) to help you win. Likewise, algorithms in computers are a set of instructions used to solve a problem.</p>
+<blockquote>
+<p>Algorithms are instructions to perform a task</p>
+</blockquote>
+<p>There are “good” algorithms and “bad” algorithms. The good ones are fast; the bad ones are slow. Slow algorithms cost more money and make some calculations impossible in our lifespan!</p>
 <p>We are going to explore the basic concepts of algorithms. Also, we are going learn how to distinguish “fast” algorithms from “slow” ones. Even better, you will be able to “measure” the performance of your algorithms and improve them!</p>
 <h1 id="How-to-improve-your-coding-skills">How to improve your coding skills?<a href="#How-to-improve-your-coding-skills" class="headerlink" title="How to improve your coding skills?"></a></h1><p>The first step to improving something is to measure it.</p>
 <blockquote><p>Measurement is the first step that leads to control and eventually to improvement. If you can’t measure something, you can’t understand it. If you can’t understand it, you can’t control it. If you can’t control it, you can’t improve it.</p>
@@ -735,8 +742,8 @@ Are you ready to become a super programmer and scale your code?! <img src="/imag
       <div class="container">
         <div class="p-y-2">
           &copy; 2018 <a href="http://adrianmejia.com">Adrian Mejia</a>
-          <span class="muted m-x-4" title="Mon Apr 23 2018 15:27:09 GMT-0400 (EDT)">
-            v.p7nkp9
+          <span class="muted m-x-4" title="Tue Apr 24 2018 16:25:59 GMT-0400 (EDT)">
+            v.p7pi3b
           </span>
         </div>
       </div>
