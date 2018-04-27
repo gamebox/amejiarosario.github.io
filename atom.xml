@@ -367,7 +367,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
     <link href="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/"/>
     <id>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</id>
     <published>2018-04-04T20:16:07.000Z</published>
-    <updated>2018-04-27T17:29:43.866Z</updated>
+    <updated>2018-04-27T18:56:43.000Z</updated>
     
     <content type="html"><![CDATA[<p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
 <p>However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course.</p>
@@ -578,7 +578,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
 <p>As you can see, some algorithms are very time-consuming. An input size as little as 100, it is impossible to compute even if we had a 1 PHz (1 million GHz) CPU!! Hardware does not scale as well as software.</p>
 <p>In the next post, we are going to explore all of these time complexities with a code example or two!
 Are you ready to become a super programmer and scale your code?! <img src="/images/superman_shield.svg" width="25" height="25" alt="superman shield" style="display:inline-block;"></p>
-<p><strong>Continue with the next part 👉</strong> <a href="/blog/2018/04/05/big-o-notation-and-time-complexity-to-speed-up-your-algorithms/">Eight running times that every programmer should know</a></p>
+<p><strong>Continue with the next part 👉</strong> <a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight running times that every programmer should know</a></p>
 <!--
 
 Improvement ideas:
