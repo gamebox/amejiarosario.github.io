@@ -367,7 +367,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
     <link href="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/"/>
     <id>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</id>
     <published>2018-04-04T20:16:07.000Z</published>
-    <updated>2018-04-27T17:26:48.825Z</updated>
+    <updated>2018-04-27T17:29:43.866Z</updated>
     
     <content type="html"><![CDATA[<p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
 <p>However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course.</p>
@@ -411,7 +411,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
 <blockquote>
 <p>The <strong>time complexity</strong> is not about timing how long the algorithm takes. Instead, how many operations are executed. The number of instructions executed by a program is affected by the size of the input and how their elements are arranged.</p>
 </blockquote>
-<p>For instance, you want to sort an array of numbers. If the elements are already the program will perform fewer operations. On the contrary, if the items are in reverse order, it will require more swap operations to get it sorted.</p>
+<p>For instance, you want to sort an array of numbers. If the elements are already sorted the program will perform fewer operations. On the contrary, if the items are in reverse order, it will require more swap operations to get it sorted.</p>
 <p>We can say for each algorithm we can have the following running times:</p>
 <ul>
 <li>Worst-case time complexity</li>
