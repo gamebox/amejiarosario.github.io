@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</loc>
+    <loc>http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/</loc>
     
-    <lastmod>2018-04-28T17:24:04.847Z</lastmod>
+    <lastmod>2018-04-28T23:09:38.651Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/</loc>
+    <loc>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</loc>
     
-    <lastmod>2018-04-28T17:23:18.379Z</lastmod>
+    <lastmod>2018-04-28T23:09:38.649Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://adrianmejia.com/blog/2016/06/25/List-tasks-in-npm-grunt-gulp-and-rake/</loc>
+    
+    <lastmod>2018-04-28T23:09:38.640Z</lastmod>
     
   </url>
   
@@ -19,13 +26,6 @@
     <loc>http://adrianmejia.com/blog/2018/04/24/Analysis-of-Recursive-Algorithms/</loc>
     
     <lastmod>2018-04-24T12:44:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://adrianmejia.com/blog/2016/06/25/List-tasks-in-npm-grunt-gulp-and-rake/</loc>
-    
-    <lastmod>2018-04-23T18:49:13.006Z</lastmod>
     
   </url>
   
@@ -65,14 +65,14 @@
   </url>
   
   <url>
-    <loc>http://adrianmejia.com/stylesheets/company_revenue.css</loc>
+    <loc>http://adrianmejia.com/niceties/adrian-book-sq.html</loc>
     
     <lastmod>2016-08-14T19:12:25.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adrianmejia.com/niceties/adrian-book-sq.html</loc>
+    <loc>http://adrianmejia.com/stylesheets/company_revenue.css</loc>
     
     <lastmod>2016-08-14T19:12:25.000Z</lastmod>
     
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>http://adrianmejia.com/page/index.html</loc>
+    <loc>http://adrianmejia.com/es/index.html</loc>
     
     <lastmod>2016-08-14T19:12:25.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://adrianmejia.com/es/index.html</loc>
+    <loc>http://adrianmejia.com/page/index.html</loc>
     
     <lastmod>2016-08-14T19:12:25.000Z</lastmod>
     
