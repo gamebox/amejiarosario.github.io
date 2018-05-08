@@ -257,7 +257,7 @@ ga('send', 'pageview');
   },
   
   "datePublished": "2018-04-05T16:10:09-04:00",
-  "dateModified": "2018-04-28T19:09:38-04:00",
+  "dateModified": "2018-05-08T16:14:04-04:00",
   "author": {
     "@type": "Person",
     "name": "Adrian Mejia"
@@ -288,7 +288,7 @@ ga('send', 'pageview');
       <span title="Last time this post was updated">
         <i class="fa fa-calendar" aria-hidden="true"></i>
         Last update
-        <time datetime="2018-04-28T23:09:38.651Z" itemprop="dateUpdated">April 28th 2018</time>
+        <time datetime="2018-05-08T20:14:04.982Z" itemprop="dateUpdated">May 8th 2018</time>
       </span>
 
       
@@ -418,7 +418,7 @@ Big O Notation | Name | Example(s)
 <h1 id="O-n-Linear-time">O(n) - Linear time<a href="#O-n-Linear-time" class="headerlink" title="O(n) - Linear time"></a></h1><p>Linear running time algorithms are very common. It implies visiting every element from the input in the worst-case scenario.</p>
 <p>Linear time complexity means that as the input grows, the algorithms take proportionally longer to complete. A function with a linear time complexity has a growth rate <code>O(n)</code>. Let’s do an example:</p>
 <h2 id="Largest-item-on-an-unsorted-array">Largest item on an unsorted array<a href="#Largest-item-on-an-unsorted-array" class="headerlink" title="Largest item on an unsorted array"></a></h2><p>Let’s say you want to find the maximum value from an unsorted array.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">findMax</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> max;</div><div class="line">  <span class="keyword">let</span> counter = <span class="number">0</span>;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n.length; i++) &#123;</div><div class="line">    counter++;</div><div class="line">    <span class="keyword">if</span>(!max &amp;&amp; max &lt; n[i]) &#123;</div><div class="line">      max = n[i];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`n: <span class="subst">$&#123;n.length&#125;</span>, counter: <span class="subst">$&#123;counter&#125;</span>`</span>);</div><div class="line">  <span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">findMax</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> max;</div><div class="line">  <span class="keyword">let</span> counter = <span class="number">0</span>;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; n.length; i++) &#123;</div><div class="line">    counter++;</div><div class="line">    <span class="keyword">if</span>(max === <span class="literal">undefined</span> || max &lt; n[i]) &#123;</div><div class="line">      max = n[i];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`n: <span class="subst">$&#123;n.length&#125;</span>, counter: <span class="subst">$&#123;counter&#125;</span>`</span>);</div><div class="line">  <span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>How many operations will the <code>findMax</code> function do?</p>
 <p>Well, it checks every element from <code>n</code>. If the current element is bigger than <code>max</code> it will do an assignment.</p>
 <p>Notice that we added a counter so it can help us count how many times the inner block is executed.</p>
@@ -649,7 +649,8 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
 <h1 id="All-running-complexities-graphs">All running complexities graphs<a href="#All-running-complexities-graphs" class="headerlink" title="All running complexities graphs"></a></h1><p>We explored the most common algorithms running times with one or two examples each! They should give you an idea how to calculate your running times when developing your projects. Below you can find a chart with a graph of all the time complexities that we covered:</p>
 <img src="/images/big-o-running-time-complexity.png" title="Big o running time complexities">
 <p>Mind your time complexity!</p>
-
+<!-- Backlinks and references -->
+<!-- https://www.reddit.com/r/compsci/comments/8hwozu/8_time_complexities_that_every_programmer_should/ -->
       </div>
 
       
@@ -879,8 +880,8 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
       <div class="container">
         <div class="p-y-2">
           &copy; 2018 <a href="http://adrianmejia.com">Adrian Mejia</a>
-          <span class="muted m-x-4" title="Sat Apr 28 2018 19:11:42 GMT-0400 (EDT)">
-            v.p7x4fi
+          <span class="muted m-x-4" title="Tue May 08 2018 16:15:23 GMT-0400 (EDT)">
+            v.p8fexn
           </span>
         </div>
       </div>
