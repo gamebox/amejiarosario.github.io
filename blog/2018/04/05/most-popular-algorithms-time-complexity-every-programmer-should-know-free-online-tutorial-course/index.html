@@ -257,7 +257,7 @@ ga('send', 'pageview');
   },
   
   "datePublished": "2018-04-05T16:10:09-04:00",
-  "dateModified": "2018-05-08T17:21:12-04:00",
+  "dateModified": "2018-05-10T11:56:31-04:00",
   "author": {
     "@type": "Person",
     "name": "Adrian Mejia"
@@ -288,13 +288,13 @@ ga('send', 'pageview');
       <span title="Last time this post was updated">
         <i class="fa fa-calendar" aria-hidden="true"></i>
         Last update
-        <time datetime="2018-05-08T21:21:12.828Z" itemprop="dateUpdated">May 8th 2018</time>
+        <time datetime="2018-05-10T15:56:31.482Z" itemprop="dateUpdated">May 10th 2018</time>
       </span>
 
       
         <span class="m-x-2" title="Pageviews">
           <i class="fa fa-eye" aria-hidden="true"></i>
-          0.5k
+          1.1k
         </span>
       
 
@@ -411,14 +411,22 @@ Big O Notation | Name | Example(s)
 <p>For instance, if a function takes the same time to process 10 elements as well as 1 million items, then we say that it has a constant growth rate or <code>O(1)</code>. Let’s see some examples.</p>
 <h2 id="Odd-or-Even">Odd or Even<a href="#Odd-or-Even" class="headerlink" title="Odd or Even"></a></h2><p>  Find if a number is odd or even.</p>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isEvenOrOdd</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> n % <span class="number">2</span> ? <span class="string">'Odd'</span> : <span class="string">'Even'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(isEvenOrOdd(<span class="number">10</span>)); <span class="comment">// =&gt; Even</span></div><div class="line"><span class="built_in">console</span>.log(isEvenOrOdd(<span class="number">10001</span>)); <span class="comment">// =&gt; Odd</span></div></pre></td></tr></table></figure>
-<p> It doesn’t matter if n is 10 or 10,001, it will execute line 2 only one time.</p>
-<p> <strong>Note:</strong> primitive operations like sum, multiplication, substraction, division, modulo, bit shift, etc are constant time. Other operations/methods like <em><code>Array.sort</code></em> are not! So, beware of the runtime of methods manipulating objects and arrays.</p>
-<p> <strong>Advanced note:</strong> you could also replace <em><code>n % 2</code></em> with the bit AND operator: <em><code>n &amp; 1</code></em>. If the first bit (<abbr title="Least Significant Bit">LSB</abbr>) is <code>1</code> then is odd otherwise is even.</p>
-<p> This example is easy. Let’s do another example.</p>
+<p>  <strong>Advanced note:</strong> you could also replace <em><code>n % 2</code></em> with the bit AND operator: <em><code>n &amp; 1</code></em>. If the first bit (<abbr title="Least Significant Bit">LSB</abbr>) is <code>1</code> then is odd otherwise is even.</p>
+<p> It doesn’t matter if n is <code>10</code> or <code>10,001</code>, it will execute line 2 only one time.</p>
+<blockquote>
+<p>Do not be fool by one-liners. They don’t always translate to constant times. You have to be aware of how they are implemented.</p>
+</blockquote>
+<p>If you have a method like <code>Array.sort()</code> or any other array or object methods you have to look into the implementation to determine its running time.</p>
+<p>Primitive operations like sum, multiplication, substraction, division, modulo, bit shift, etc have a constant runtime. This can be shocking since if you use schoolbook long multiplication algorithm, it would take <code>O(n<sup>2</sup>)</code> to multiply two numbers.</p>
+<p>However, most programming languages limit numbers to a max value (e.g. in JS: <code>Number.MAX_VALUE</code> =&gt; <code>1.7976931348623157e+308</code>). So, you cannot operate numbers that yield a result greater than the MAX_VALUE. So, primitive operations are bound to be completed on a fixed amount of instructions <code>O(1)</code> or throw overflow errors.</p>
+<!-- Addition O(n), Multiplication O(n^2) https://en.wikipedia.org/wiki/Computational_complexity_of_mathematical_operations -->
+<p> This example was easy. Let’s do another example.</p>
 <h2 id="Look-up-table">Look-up table<a href="#Look-up-table" class="headerlink" title="Look-up table"></a></h2><p>Given a string find its word frecency data.</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> dictionary = &#123;<span class="attr">the</span>: <span class="number">22038615</span>, <span class="attr">be</span>: <span class="number">12545825</span>, <span class="attr">and</span>: <span class="number">10741073</span>, <span class="attr">of</span>: <span class="number">10343885</span>, <span class="attr">a</span>: <span class="number">10144200</span>, <span class="attr">in</span>: <span class="number">6996437</span>, <span class="attr">to</span>: <span class="number">6332195</span> <span class="comment">/* ... */</span>&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getWordFrequency</span>(<span class="params">dictionary, word</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> dictionary[word];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(getWordFrequency(dictionary, <span class="string">'the'</span>));</div><div class="line"><span class="built_in">console</span>.log(getWordFrequency(dictionary, <span class="string">'in'</span>));</div></pre></td></tr></table></figure>
 <p>Again, we can be sure that even if the dictionary has 10 or 1 million words, it would still execute line 4 only one time to find the word. However, if we decided to store the dictionary as an array rather than a hash map, then it would be a different story. In the next section, we are going to explore what’s the running time to find an item in an array.</p>
-<p><strong>Advanced note:</strong> Only a hash table with a perfect <em>hash function</em> will have a worst-case runtime of <em>O(1)</em>. The perfect hash function is not practical, so there will be some collitions and we can would have to say that the worst-case runtime is <em>O(n)</em>. On <em>average</em> the lookup time is considered <em>O(1)</em>.</p>
+<blockquote>
+<p>Only a hash table with a perfect <em>hash function</em> will have a worst-case runtime of <em>O(1)</em>. The perfect hash function is not practical, so there will be some collitions and workarounds leads to a worst-case runtime of <em>O(n)</em>. Still, on <em>average</em> the lookup time is <em>O(1)</em>.</p>
+</blockquote>
 <h1 id="O-n-Linear-time">O(n) - Linear time<a href="#O-n-Linear-time" class="headerlink" title="O(n) - Linear time"></a></h1><p>Linear running time algorithms are very common. It implies visiting every element from the input in the worst-case scenario.</p>
 <p>Linear time complexity means that as the input grows, the algorithms take proportionally longer to complete. A function with a linear time complexity has a growth rate <code>O(n)</code>. Let’s do an example:</p>
 <h2 id="Largest-item-on-an-unsorted-array">Largest item on an unsorted array<a href="#Largest-item-on-an-unsorted-array" class="headerlink" title="Largest item on an unsorted array"></a></h2><p>Let’s say you want to find the maximum value from an unsorted array.</p>
@@ -885,8 +893,8 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
       <div class="container">
         <div class="p-y-2">
           &copy; 2018 <a href="http://adrianmejia.com">Adrian Mejia</a>
-          <span class="muted m-x-4" title="Tue May 08 2018 17:21:49 GMT-0400 (EDT)">
-            v.p8fi0d
+          <span class="muted m-x-4" title="Thu May 10 2018 11:57:01 GMT-0400 (EDT)">
+            v.p8isb1
           </span>
         </div>
       </div>
