@@ -997,7 +997,7 @@ https://stackoverflow.com/a/22615787/684957
     <link href="http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/"/>
     <id>http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/</id>
     <published>2018-04-05T20:10:09.000Z</published>
-    <updated>2018-05-25T12:24:27.559Z</updated>
+    <updated>2018-05-25T12:30:15.543Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Summary">Summary<a href="#Summary" class="headerlink" title="Summary"></a></h1><p>We are going to learn the top algorithm’s running time that every developer should be familiar. Knowing these time complexities will help you to assess if your code will scale. Also, it’s handy to compare different solutions for the same problem. You would be able to estimate which one will perform better.</p>
 <a id="more"></a>
@@ -1364,7 +1364,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
     <link href="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/"/>
     <id>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</id>
     <published>2018-04-04T20:16:07.000Z</published>
-    <updated>2018-05-25T12:25:12.310Z</updated>
+    <updated>2018-05-25T12:30:15.543Z</updated>
     
     <content type="html"><![CDATA[<p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
 <p>However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course.</p>
@@ -2254,7 +2254,7 @@ We want to update the variables on <code>blur</code> (when you click somewhere e
     <link href="http://adrianmejia.com/blog/2016/06/25/List-tasks-in-npm-grunt-gulp-and-rake/"/>
     <id>http://adrianmejia.com/blog/2016/06/25/List-tasks-in-npm-grunt-gulp-and-rake/</id>
     <published>2016-06-25T19:14:49.000Z</published>
-    <updated>2018-05-08T21:25:30.801Z</updated>
+    <updated>2018-05-25T12:30:15.542Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">npm run</div><div class="line">yarn run</div><div class="line">grunt --help</div><div class="line">gulp --tasks</div><div class="line">rake --tasks</div></pre></td></tr></table></figure>
 ]]></content>
