@@ -1069,6 +1069,7 @@ It’s like a line of people at the movies, the first to come in is the first to
 <!-- there is not a generic runtime for the operations because it depends more  --></p>
 <p><strong>Time complexity</strong></p>
 <p><em>Click on the <strong>name</strong> to go the section or click on the <strong>runtime</strong> to go the implementation</em></p>
+<p><code>*</code> = Amortized runtime</p>
 <table>
 <thead>
 <tr>
@@ -1127,18 +1128,18 @@ It’s like a line of people at the movies, the first to come in is the first to
 <td>-</td>
 <td><em><a href="#LinkedList.contains">O(n)</a></em></td>
 <td><em><a href="#LinkedList.remove">O(n)</a></em></td>
-<td>Singly Linked List <a href="#Singly-Linked-Lists-time-complexity">Details here</a>.</td>
+<td>Adding/Removing to the start of the list is <em><code>O(1)</code></em>. <a href="#Singly-Linked-Lists-time-complexity">Details here</a>.</td>
 </tr>
 <tr>
 <td><a href="#Doubly-Linked-Lists"><strong>Linked List</strong> (doubly)</a></td>
-<td><em><a href="#DoublyLinkedList.addLast">O(1)</a></em></td>
+<td><em><a href="#DoublyLinkedList.add">O(n)</a></em></td>
 <td>-</td>
 <td><em><a href="#LinkedList.contains">O(n)</a></em></td>
 <td><em><a href="#LinkedList.remove">O(n)</a></em></td>
-<td>Deleting from the beginning/end is O(1). But, deleting from the middle is O(n). <a href="#Doubly-Linked-Lists-time-complexity">Details here</a></td>
+<td>Adding/Deleting from the beginning/end is <em><code>O(1)</code></em>. But, deleting/adding from the middle is <em><code>O(n)</code></em>. <a href="#Doubly-Linked-Lists-time-complexity">Details here</a></td>
 </tr>
 <tr>
-<td><a href="#Stacks"><strong>Stack</strong></a> (array implementation)</td>
+<td><a href="#Stacks"><strong>Stack</strong> (array implementation)</a></td>
 <td><em><a href="#Stacks">O(1)</a></em></td>
 <td>-</td>
 <td>-</td>
@@ -1146,7 +1147,7 @@ It’s like a line of people at the movies, the first to come in is the first to
 <td>Insert/delete is last-in, first-out (LIFO)</td>
 </tr>
 <tr>
-<td><a href="#QueueNaiveImpl"><strong>Queue</strong></a> (naive array impl.)</td>
+<td><a href="#QueueNaiveImpl"><strong>Queue</strong> (naive array impl.)</a></td>
 <td><em><a href="#QueueNaiveImpl">O(n)</a></em></td>
 <td>-</td>
 <td>-</td>
@@ -1154,7 +1155,7 @@ It’s like a line of people at the movies, the first to come in is the first to
 <td>Insert (<code>Array.shift</code>) is <em>O(n)</em></td>
 </tr>
 <tr>
-<td><a href="#QueueArrayImpl"><strong>Queue</strong></a> (array implementation)</td>
+<td><a href="#QueueArrayImpl"><strong>Queue</strong> (array implementation)</a></td>
 <td><em><a href="#QueueArrayImpl">O(1)</a>*</em></td>
 <td>-</td>
 <td>-</td>
@@ -1162,7 +1163,7 @@ It’s like a line of people at the movies, the first to come in is the first to
 <td>Worst time insert is <em>O(n)</em>. However amortized is <em>O(1)</em></td>
 </tr>
 <tr>
-<td><a href="#QueueListImpl"><strong>Queue</strong></a> (list implementation)</td>
+<td><a href="#QueueListImpl"><strong>Queue</strong> (list implementation)</a></td>
 <td><em><a href="#QueueListImpl">O(1)</a></em></td>
 <td>-</td>
 <td>-</td>
@@ -1171,7 +1172,6 @@ It’s like a line of people at the movies, the first to come in is the first to
 </tr>
 </tbody>
 </table>
-<p><code>*</code> = Amortized runtime</p>
 <p>Note: <strong>Binary search trees</strong> and trees in general will be cover in the next post. Also, graph data structures.</p>
 <!-- Links
 
@@ -1442,8 +1442,8 @@ https://www.reddit.com/r/compsci/comments/8m1dx0/data_structures_for_beginners_a
       <div class="container">
         <div class="p-y-2">
           &copy; 2018 <a href="http://adrianmejia.com">Adrian Mejia</a>
-          <span class="muted m-x-4" title="Sun May 27 2018 12:21:03 GMT-0400 (EDT)">
-            v.p9ear3
+          <span class="muted m-x-4" title="Sun May 27 2018 12:24:07 GMT-0400 (EDT)">
+            v.p9eaw7
           </span>
         </div>
       </div>
