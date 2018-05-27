@@ -42,6 +42,7 @@
 <p>Bookmark it, pin it or share it, so you have it at hand when you need it.</p>
 </blockquote>
 <p><em>Click on the <strong>name</strong> to go the section or click on the <strong>runtime</strong> to go the implementation</em></p>
+<p><code>*</code> = Amortized runtime</p>
 <table>
 <thead>
 <tr>
@@ -99,19 +100,19 @@
 <td><em><a href="#SinglyLinkedList.addLast">O(n)</a></em></td>
 <td>-</td>
 <td><em><a href="#LinkedList.contains">O(n)</a></em></td>
-<td><em><a href="#LinkedList.removeAt">O(n)</a></em></td>
-<td>Singly Linked List <a href="#Singly-Linked-Lists-time-complexity">Details here</a>.</td>
+<td><em><a href="#LinkedList.remove">O(n)</a></em></td>
+<td>Adding/Removing to the start of the list is <em><code>O(1)</code></em>. <a href="#Singly-Linked-Lists-time-complexity">Details here</a>.</td>
 </tr>
 <tr>
 <td><a href="#Doubly-Linked-Lists"><strong>Linked List</strong> (doubly)</a></td>
-<td><em><a href="#DoublyLinkedList.addLast">O(1)</a></em></td>
+<td><em><a href="#DoublyLinkedList.add">O(n)</a></em></td>
 <td>-</td>
 <td><em><a href="#LinkedList.contains">O(n)</a></em></td>
-<td><em><a href="#LinkedList.removeAt">O(n)</a></em></td>
-<td>Deleting from the beginning/end is O(1). But, deleting from the middle is O(n). <a href="#Doubly-Linked-Lists-time-complexity">Details here</a></td>
+<td><em><a href="#LinkedList.remove">O(n)</a></em></td>
+<td>Adding/Deleting from the beginning/end is <em><code>O(1)</code></em>. But, deleting/adding from the middle is <em><code>O(n)</code></em>. <a href="#Doubly-Linked-Lists-time-complexity">Details here</a></td>
 </tr>
 <tr>
-<td><a href="#Stacks"><strong>Stack</strong></a> (array implementation)</td>
+<td><a href="#Stacks"><strong>Stack</strong> (array implementation)</a></td>
 <td><em><a href="#Stacks">O(1)</a></em></td>
 <td>-</td>
 <td>-</td>
@@ -119,7 +120,7 @@
 <td>Insert/delete is last-in, first-out (LIFO)</td>
 </tr>
 <tr>
-<td><a href="#QueueNaiveImpl"><strong>Queue</strong></a> (naive array impl.)</td>
+<td><a href="#QueueNaiveImpl"><strong>Queue</strong> (naive array impl.)</a></td>
 <td><em><a href="#QueueNaiveImpl">O(n)</a></em></td>
 <td>-</td>
 <td>-</td>
@@ -127,7 +128,7 @@
 <td>Insert (<code>Array.shift</code>) is <em>O(n)</em></td>
 </tr>
 <tr>
-<td><a href="#QueueArrayImpl"><strong>Queue</strong></a> (array implementation)</td>
+<td><a href="#QueueArrayImpl"><strong>Queue</strong> (array implementation)</a></td>
 <td><em><a href="#QueueArrayImpl">O(1)</a>*</em></td>
 <td>-</td>
 <td>-</td>
@@ -135,7 +136,7 @@
 <td>Worst time insert is <em>O(n)</em>. However amortized is <em>O(1)</em></td>
 </tr>
 <tr>
-<td><a href="#QueueListImpl"><strong>Queue</strong></a> (list implementation)</td>
+<td><a href="#QueueListImpl"><strong>Queue</strong> (list implementation)</a></td>
 <td><em><a href="#QueueListImpl">O(1)</a></em></td>
 <td>-</td>
 <td>-</td>
@@ -144,7 +145,6 @@
 </tr>
 </tbody>
 </table>
-<p><code>*</code> = Amortized runtime</p>
 <p>Note: <strong>Binary search trees</strong> and trees in general will be cover in the next post. Also, graph data structures.</p>
 <h1 id="Primitive-Data-Types">Primitive Data Types<a href="#Primitive-Data-Types" class="headerlink" title="Primitive Data Types"></a></h1><p>Primitive data types are the most basic elements where all the other data structures built upon.  Some primitives are:</p>
 <ul>
@@ -571,16 +571,17 @@ Yay!!! 🎉 we have a much better hash function!</p>
 <p>Adding and removing elements from the beginning is a constant time because we hold a reference to the first element:</p>
 <figure class="highlight js"><figcaption><span>LinkedList.removeFirst</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">addFirst(value) &#123;</div><div class="line">  <span class="keyword">const</span> node = <span class="keyword">new</span> Node(value);</div><div class="line">  node.next = <span class="keyword">this</span>.first;</div><div class="line">  <span class="keyword">this</span>.first = node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>As expected the runtime for removing/adding to the firt element from a linked List is always constant <em>O(1)</em></p>
-<p><a id="LinkedList.removeAt"></a></p>
-<p><strong>Removing and searching anywhere a linked list</strong></p>
+<p><a id="LinkedList.remove"></a></p>
+<p><strong>Removing an element anywhere from a linked list</strong></p>
 <p>Removing an element anywhere in the list levarage the <code>removeLast</code> and <code>removeFirst</code>. However, if the removal is in the middle then we assign the previous node to the next one. That removes any reference from the current node, thus is removed from the list:</p>
-<figure class="highlight js"><figcaption><span>LinkedList.removeAt</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">removeAt(nth) &#123;</div><div class="line">  <span class="keyword">if</span>(nth === <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.removeFirst();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> current = <span class="keyword">this</span>.first, index = <span class="number">0</span>; current;  index++, current = current.next) &#123;</div><div class="line">    <span class="keyword">if</span>(index === nth) &#123;</div><div class="line">      <span class="keyword">if</span>(!current.next) &#123; <span class="comment">// if it doesn't have next it means that it is the last</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.removeLast();</div><div class="line">      &#125;</div><div class="line marked">      current.previous = current.next;</div><div class="line">      <span class="keyword">this</span>.size--;</div><div class="line">      <span class="keyword">return</span> current.value;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Note that <code>nth</code> is a zero-based index: 0 will be the first element, 1 second and so on.</p>
+<figure class="highlight js"><figcaption><span>LinkedList.remove</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">remove(index = <span class="number">0</span>) &#123;</div><div class="line">  <span class="keyword">if</span>(index === <span class="number">0</span>) &#123;</div><div class="line marked">    <span class="keyword">return</span> <span class="keyword">this</span>.removeFirst();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> current = <span class="keyword">this</span>.first, i = <span class="number">0</span>; current;  i++, current = current.next) &#123;</div><div class="line">    <span class="keyword">if</span>(i === index) &#123;</div><div class="line">      <span class="keyword">if</span>(!current.next) &#123; <span class="comment">// if it doesn't have next it means that it is the last</span></div><div class="line marked">        <span class="keyword">return</span> <span class="keyword">this</span>.removeLast();</div><div class="line">      &#125;</div><div class="line marked">      current.previous = current.next;</div><div class="line">      <span class="keyword">this</span>.size--;</div><div class="line">      <span class="keyword">return</span> current.value;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Note that <code>index</code> is a zero-based index: 0 will be the first element, 1 second and so on.</p>
 <blockquote>
-<p>Removing from anywhere within the list is <em>O(n)</em></p>
+<p>Removing an element anywhere within the list is <em>O(n)</em>.</p>
 </blockquote>
-<p><a id="LinkedList.contains"></a>
-Searching an element on the linked list is very somewhat similar to <code>removeAt</code>:</p>
+<p><a id="LinkedList.contains"></a></p>
+<p><strong>Searching for an element in a linked list</strong></p>
+<p>Searching an element on the linked list is very somewhat similar to <code>remove</code>:</p>
 <figure class="highlight js"><figcaption><span>LinkedList.contains</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">contains(value) &#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> current = <span class="keyword">this</span>.first, index = <span class="number">0</span>; current;  index++, current = current.next) &#123;</div><div class="line">    <span class="keyword">if</span>(current.value === value) &#123;</div><div class="line">      <span class="keyword">return</span> index;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>This function finds the first element with given value.</p>
 <blockquote>
@@ -607,6 +608,11 @@ Searching an element on the linked list is very somewhat similar to <code>remove
 <td>Insert element to the end of the list</td>
 </tr>
 <tr>
+<td><a href="#DoublyLinkedList.add"><code>add</code></a></td>
+<td><em>O(n)</em></td>
+<td>Insert element anywhere in the list.</td>
+</tr>
+<tr>
 <td><a href="#DoublyLinkedList.removeFirst"><code>removeFirst</code></a></td>
 <td><em>O(1)</em></td>
 <td>Remove element to the beginning of the list</td>
@@ -617,7 +623,7 @@ Searching an element on the linked list is very somewhat similar to <code>remove
 <td>Remove element to the end of the list</td>
 </tr>
 <tr>
-<td><a href="#LinkedList.removeAt"><code>removeAt</code></a></td>
+<td><a href="#LinkedList.remove"><code>remove</code></a></td>
 <td><em>O(n)</em></td>
 <td>Remove any element from the list</td>
 </tr>
@@ -657,6 +663,14 @@ Searching an element on the linked list is very somewhat similar to <code>remove
 <figure class="highlight js"><figcaption><span>LinkedList.prototype.removeLast</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/linked-lists/linked-list.js" target="_blank" rel="external">full code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">removeLast() &#123;</div><div class="line">  <span class="keyword">let</span> current = <span class="keyword">this</span>.first;</div><div class="line">  <span class="keyword">let</span> target;</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(current &amp;&amp; current.next) &#123;</div><div class="line marked">    current = <span class="keyword">this</span>.last.previous;</div><div class="line">    <span class="keyword">this</span>.last = current;</div><div class="line">    target = current.next;</div><div class="line">    current.next = <span class="literal">null</span>;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">this</span>.first = <span class="literal">null</span>;</div><div class="line">    <span class="keyword">this</span>.last = <span class="literal">null</span>;</div><div class="line">    target = current;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(target) &#123;</div><div class="line">    <span class="keyword">this</span>.size--;</div><div class="line">    <span class="keyword">return</span> target.value;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Using doubly linked list, we no longer have to iterate through the whole list to get the 2nd last elements. We can use directly <code>this.last.previous</code> and is <code>O(1)</code>.</p>
 <p>Did you remember that for the Queue we had to use two arrays? Now, we can change that implementation an use a doubly linked list instead that has an <em>O(1)</em> for insert at the start and deleting at the end.</p>
+<p><a id="DoublyLinkedList.add"></a></p>
+<p><strong>Adding an element anywhere from a linked list</strong></p>
+<p>Adding an element on anywhere on the list leverage our <code>addFirst</code> andd <code>addLast</code> functions as you can see below:</p>
+<figure class="highlight js"><figcaption><span>LinkedList.add</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/linked-lists/linked-list.js" target="_blank" rel="external">FullCode</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">add(value, index = <span class="number">0</span>) &#123;</div><div class="line">  <span class="keyword">if</span>(index === <span class="number">0</span>) &#123;</div><div class="line marked">    <span class="keyword">return</span> <span class="keyword">this</span>.addFirst(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> current = <span class="keyword">this</span>.first, i = <span class="number">0</span>; i &lt;= <span class="keyword">this</span>.size;  i++, current = (current &amp;&amp; current.next)) &#123;</div><div class="line">    <span class="keyword">if</span>(i === index) &#123;</div><div class="line">      <span class="keyword">if</span>(i === <span class="keyword">this</span>.size) &#123; <span class="comment">// if it doesn't have next it means that it is the last</span></div><div class="line marked">        <span class="keyword">return</span> <span class="keyword">this</span>.addLast(value);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">const</span> newNode = <span class="keyword">new</span> Node(value);</div><div class="line">      newNode.previous = current.previous;</div><div class="line">      newNode.next = current;</div><div class="line"></div><div class="line">      current.previous.next = newNode;</div><div class="line">      <span class="keyword">if</span>(current.next) &#123; current.next.previous = newNode; &#125;</div><div class="line">      <span class="keyword">this</span>.size++;</div><div class="line">      <span class="keyword">return</span> newNode;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>If we have a insertion in the middle of the array, then we have to update the <code>next</code> and <code>previous</code> reference of the surrounding elements.</p>
+<blockquote>
+<p>Adding an element anywhere within the list is <em>O(n)</em>.</p>
+</blockquote>
 <h2 id="Doubly-Linked-Lists-time-complexity">Doubly Linked Lists time complexity<a href="#Doubly-Linked-Lists-time-complexity" class="headerlink" title="Doubly Linked Lists time complexity"></a></h2><p>Doubly Linked List time complexity per function is as follows:</p>
 <table>
 <thead>
@@ -678,6 +692,11 @@ Searching an element on the linked list is very somewhat similar to <code>remove
 <td>Insert element to the end of the list.</td>
 </tr>
 <tr>
+<td><a href="#DoublyLinkedList.add"><code>add</code></a></td>
+<td><em>O(n)</em></td>
+<td>Insert element anywhere in the list.</td>
+</tr>
+<tr>
 <td><a href="#DoublyLinkedList.removeFirst"><code>removeFirst</code></a></td>
 <td><em>O(1)</em></td>
 <td>Remove element to the beginning of the list.</td>
@@ -688,7 +707,7 @@ Searching an element on the linked list is very somewhat similar to <code>remove
 <td>Remove element to the end of the list.</td>
 </tr>
 <tr>
-<td><a href="#LinkedList.removeAt"><code>removeAt</code></a></td>
+<td><a href="#LinkedList.remove"><code>remove</code></a></td>
 <td><em>O(n)</em></td>
 <td>Remove any element from the list</td>
 </tr>
@@ -805,7 +824,7 @@ It’s like a line of people at the movies, the first to come in is the first to
 <td><em><a href="#SinglyLinkedList.addLast">O(n)</a></em></td>
 <td>-</td>
 <td><em><a href="#LinkedList.contains">O(n)</a></em></td>
-<td><em><a href="#LinkedList.removeAt">O(n)</a></em></td>
+<td><em><a href="#LinkedList.remove">O(n)</a></em></td>
 <td>Singly Linked List <a href="#Singly-Linked-Lists-time-complexity">Details here</a>.</td>
 </tr>
 <tr>
@@ -813,7 +832,7 @@ It’s like a line of people at the movies, the first to come in is the first to
 <td><em><a href="#DoublyLinkedList.addLast">O(1)</a></em></td>
 <td>-</td>
 <td><em><a href="#LinkedList.contains">O(n)</a></em></td>
-<td><em><a href="#LinkedList.removeAt">O(n)</a></em></td>
+<td><em><a href="#LinkedList.remove">O(n)</a></em></td>
 <td>Deleting from the beginning/end is O(1). But, deleting from the middle is O(n). <a href="#Doubly-Linked-Lists-time-complexity">Details here</a></td>
 </tr>
 <tr>
