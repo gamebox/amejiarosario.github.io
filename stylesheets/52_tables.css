@@ -7,8 +7,11 @@
   .post-content > table tbody tr, .post-content > div > table tbody tr {
     position: relative;
     height: 48px;
-    transition-duration: 0.28s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transition-duration: 0.28s;
+            transition-duration: 0.28s;
+    -webkit-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    -webkit-transition-property: background-color;
     transition-property: background-color; }
     .post-content > table tbody tr:hover, .post-content > div > table tbody tr:hover {
       background-color: #eeeeee; }
@@ -33,7 +36,8 @@
     .post-content > table td.green, .post-content > div > table td.green {
       background-color: #E8F5E9; }
     .post-content > table td:hover, .post-content > div > table td:hover {
-      filter: brightness(0.95); }
+      -webkit-filter: brightness(0.95);
+              filter: brightness(0.95); }
   .post-content > table th, .post-content > div > table th {
     position: relative;
     vertical-align: bottom;

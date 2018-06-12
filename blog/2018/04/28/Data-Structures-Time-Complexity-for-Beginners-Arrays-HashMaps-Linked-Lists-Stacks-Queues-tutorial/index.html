@@ -294,6 +294,11 @@ When we are developing software, we have to store data in memory. Depending on h
       </span>
 
       
+        <span class="m-x-2" title="Pageviews">
+          <i class="fa fa-eye" aria-hidden="true"></i>
+          0.4k
+        </span>
+      
 
       <span class="m-x-2" title="Click to go to the comments section">
         <a href="#disqus_thread">
@@ -304,7 +309,7 @@ When we are developing software, we have to store data in memory. Depending on h
 
       
         <span>
-          <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithms/">algorithms</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/big-o-notation/">big-o notation</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial-algorithms/">tutorial_algorithms</a><span class="tag-list-count">4</span></li></ul>
+          <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithms/">algorithms</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/big-o-notation/">big-o notation</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tutorial-algorithms/">tutorial_algorithms</a><span class="tag-list-count">5</span></li></ul>
         </span>
       
     </div>
@@ -335,8 +340,9 @@ When we are developing software, we have to store data in memory. Depending on h
 <li><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Intro to algorithm’s time complexity and Big O notation</a></li>
 <li><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a></li>
 <li>Data Structures for Beginners: Arrays, HashMaps, and Lists <strong>👈 you are here</strong><!-- 1. [Data Structures for Beginners: Arrays, HashMaps, and Lists](/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/) --></li>
-<li><em>Data Structures for Beginners: Trees &amp; Graphs</em> (<strong>coming soon</strong>)<!-- 1. Analysis of Recursive Algorithms **👈 you are here** --></li>
-<li><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Analysis of Recursive Algorithms</a></li>
+<li><a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/">Graph Data Structures for Beginners</a><!-- 1. Graph Data Structures for Beginners **👈 you are here** --></li>
+<li><em>Data Structures for Beginners: Trees</em> (<strong>coming soon</strong>)<!-- 1. Analysis of Recursive Algorithms **👈 you are here** --></li>
+<li><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Apendix I: Analysis of Recursive Algorithms</a></li>
 </ol>
 <hr>
 <h1 id="Data-Structures-Big-O-Cheatsheet">Data Structures Big-O Cheatsheet<a href="#Data-Structures-Big-O-Cheatsheet" class="headerlink" title="Data Structures Big-O Cheatsheet"></a></h1><p>The following table is summary of everything that we are going to cover in this post.</p>
@@ -388,6 +394,14 @@ When we are developing software, we have to store data in memory. Depending on h
 <td><em><a href="#Set-Implementation">O(1)</a>*</em></td>
 <td><em><a href="#Set-Implementation">O(1)</a>*</em></td>
 <td>Set using a HashMap implementation. <a href="#Set-Operations-runtime">Details here.</a></td>
+</tr>
+<tr>
+<td><strong>Set</strong> (using list)</td>
+<td><em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.add" target="_blank" rel="external">O(n)</a></em></td>
+<td>-</td>
+<td><em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.has" target="_blank" rel="external">O(n)</a>]</em></td>
+<td><em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.delete" target="_blank" rel="external">O(n)</a></em></td>
+<td>Implemented using Binary Search Tree</td>
 </tr>
 <tr>
 <td><strong>Set</strong> (using Binary Search Tree)</td>
@@ -805,7 +819,8 @@ Yay!!! 🎉 we have a much better hash function!</p>
 <h2 id="Set-Implementation">Set Implementation<a href="#Set-Implementation" class="headerlink" title="Set Implementation"></a></h2><p>We could use the JavaScript built-in <code>Set</code>. However, if we implement it ourselves, it’s more obvious to deduct the runtimes. We are going to use the <a href="#HashMapWithRehash">optimized HashMap</a> with rehash functionality.</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> HashMap = <span class="built_in">require</span>(<span class="string">'../hash-maps/hash-map'</span>);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySet</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>() &#123;</div><div class="line">    <span class="keyword">this</span>.hashMap = <span class="keyword">new</span> HashMap();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  add(value) &#123;</div><div class="line">    <span class="keyword">this</span>.hashMap.set(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  has(value) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.has(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  get size() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.size;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">delete</span>(value) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.delete(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  entries() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.keys.reduce(<span class="function">(<span class="params">acc, key</span>) =&gt;</span> &#123;</div><div class="line">      <span class="keyword">if</span>(key !== <span class="literal">undefined</span>) &#123;</div><div class="line">        acc.push(key.content);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> acc</div><div class="line">    &#125;, []);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>We used <code>HashMap.set</code> to add the set elements without duplicates. We use the key as the value, and since hash maps keys are unique we are all set.</p>
-<p>Checking if an element is already there can be done using the <code>hashMap.has</code> which has an amortized runtime of <em><code>O(1)</code></em>. The most operations would be an amortized constant time except for getting the <code>entries</code> which is  <em><code>O(n)</code></em></p>
+<p>Checking if an element is already there can be done using the <code>hashMap.has</code> which has an amortized runtime of <em><code>O(1)</code></em>. The most operations would be an amortized constant time except for getting the <code>entries</code> which is  <em><code>O(n)</code></em>.</p>
+<p>Note: The JS built-in <code>Set.has</code> has a runtime of <em>O(n)</em>, since it uses a regular list of elements and check each element at a time. You can see the <code>Set.has</code> algorithm <a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.has" target="_blank" rel="external">here</a></p>
 <p>Here some examples how to use it:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</div><div class="line"><span class="comment">// const set = new Set(); // Using the built-in</span></div><div class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> MySet(); <span class="comment">// Using our own implementation</span></div><div class="line"></div><div class="line">set.add(<span class="string">'one'</span>);</div><div class="line">set.add(<span class="string">'uno'</span>);</div><div class="line">set.add(<span class="string">'one'</span>); <span class="comment">// should NOT add this one twice</span></div><div class="line"></div><div class="line">assert.equal(set.has(<span class="string">'one'</span>), <span class="literal">true</span>);</div><div class="line">assert.equal(set.has(<span class="string">'dos'</span>), <span class="literal">false</span>);</div><div class="line"></div><div class="line">assert.equal(set.size, <span class="number">2</span>);</div><div class="line"><span class="comment">// assert.deepEqual(Array.from(set), ['one', 'uno']);</span></div><div class="line"></div><div class="line">assert.equal(set.delete(<span class="string">'one'</span>), <span class="literal">true</span>);</div><div class="line">assert.equal(set.delete(<span class="string">'one'</span>), <span class="literal">false</span>);</div><div class="line">assert.equal(set.has(<span class="string">'one'</span>), <span class="literal">false</span>);</div><div class="line">assert.equal(set.size, <span class="number">1</span>);</div></pre></td></tr></table></figure>
 <p>You should be able to use <code>MySet</code> and the built-in <code>Set</code> interchangeably for this examples.</p>
@@ -1269,6 +1284,24 @@ https://www.reddit.com/r/compsci/comments/8m1dx0/data_structures_for_beginners_a
 
               <!-- <ol> -->
               <article class="col-md-6 col-sm-6 card">
+  <a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/">
+    
+      <img src="/images/data-structures-time-complexity-trees-graphs-binary-search-tree-small.jpg" width="300" height="250">
+      <section class="p-a-1">
+        <h3>Graph Data Structures for Beginners</h3>
+      </section>
+    
+  </a>
+</article>
+
+              <!-- </ol> -->
+
+              
+            
+              
+
+              <!-- <ol> -->
+              <article class="col-md-6 col-sm-6 card">
   <a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">
     
       <img src="/images/data-structures-analysis-of-recursive-algorithms-small.jpg" width="300" height="250">
@@ -1403,6 +1436,15 @@ https://www.reddit.com/r/compsci/comments/8m1dx0/data_structures_for_beginners_a
   
     <div class="article-nav m-y-4">
       
+        <a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/" class="article-nav-newer" class="article-nav-link-wrap">
+          <strong class="article-nav-caption"><i class="fa fa-chevron-left"></i> newer</strong>
+          <div class="article-nav-title">
+            
+              Graph Data Structures for Beginners
+            
+          </div>
+        </a>
+      
       
         <a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/" class="article-nav-older" class="article-nav-link-wrap">
           <strong class="article-nav-caption">older <i class="fa fa-chevron-right"></i></strong>
@@ -1442,8 +1484,8 @@ https://www.reddit.com/r/compsci/comments/8m1dx0/data_structures_for_beginners_a
       <div class="container">
         <div class="p-y-2">
           &copy; 2018 <a href="http://adrianmejia.com">Adrian Mejia</a>
-          <span class="muted m-x-4" title="Tue May 29 2018 13:08:36 GMT-0400 (EDT)">
-            v.p9i2ac
+          <span class="muted m-x-4" title="Tue Jun 12 2018 17:46:02 GMT-0400 (EDT)">
+            v.pa8cgq
           </span>
         </div>
       </div>

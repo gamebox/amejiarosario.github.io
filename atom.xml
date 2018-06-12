@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://adrianmejia.com/"/>
-  <updated>2018-04-28T23:20:40.000Z</updated>
+  <updated>2018-05-14T09:19:22.000Z</updated>
   <id>http://adrianmejia.com/</id>
   
   <author>
@@ -14,6 +14,415 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Graph Data Structures for Beginners</title>
+    <link href="http://adrianmejia.com/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/"/>
+    <id>http://adrianmejia.com/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/</id>
+    <published>2018-05-14T09:19:22.000Z</published>
+    <updated>2018-05-14T09:19:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>In this post, we are going to explore non-linear data structures like graphs. We are going to cover the central concepts and typical applications.</p>
+<p>You are probably using programs that use graphs (and trees). Let’s say for instance that you want to know the shortest path between your workplace and home you can use graph algorithms to get the answer! We are going to explore this and other fun challenges.</p>
+<a id="more"></a>
+<p>In the previous post, we explore linear data structures like arrays, linked lists, sets, stacks and so on. This post builds on top of what we learned.</p>
+<hr>
+<p>This post is part of a tutorial series:</p>
+<p><strong>Learning Data Structures and Algorithms (DSA) for Beginners</strong></p>
+<ol>
+<li><p><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Intro to algorithm’s time complexity and Big O notation</a></p>
+<!-- 1. Intro to Algorithm's Time Complexity and Big O Notation **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a></p>
+<!-- 1. Eight time complexities that every programmer should know **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/">Data Structures for Beginners: Arrays, HashMaps, and Lists</a></p>
+<!-- 1. Data Structures for Beginners: Arrays, HashMaps, and Lists **👈 you are here** -->
+</li>
+<li><p>Graph Data Structures for Beginners <strong>👈 you are here</strong></p>
+<!-- 1. [Graph Data Structures for Beginners](/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/) -->
+</li>
+<li><p><em>Data Structures for Beginners: Trees</em> (<strong>coming soon</strong>)</p>
+<!-- 1. Analysis of Recursive Algorithms **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Apendix I: Analysis of Recursive Algorithms</a></p>
+</li>
+</ol>
+<hr>
+<p>Here is the summary of the operations that we are going to cover on this post:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Adjacency List</th>
+<th>Adjacency Matrix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Space</td>
+<td><em><a href="#List.space">O(&#124;V&#124; + &#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.space">O(&#124;V&#124;<sup>2</sup>)</a></em></td>
+</tr>
+<tr>
+<td><strong>add</strong>Vertex</td>
+<td><em><a href="#Graph.addVertex">O(1)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(&#124;V&#124;<sup>2</sup>)</a></em></td>
+</tr>
+<tr>
+<td><strong>remove</strong>Vertex</td>
+<td><em><a href="#Graph.removeVertex">O(&#124;V&#124; + &#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(&#124;V&#124;<sup>2</sup>)</a></em></td>
+</tr>
+<tr>
+<td><strong>add</strong>Edge</td>
+<td><em><a href="#Graph.addEdge">O(1)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>remove</strong>Edge (using Array)</td>
+<td><em><a href="#Graph.removeEdge">O(&#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>remove</strong>Edge (using HashSet)</td>
+<td><em>O(1)</em></td>
+<td><em><a href="#Matrix.addVertex">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>get</strong>Adjacents</td>
+<td><em><a href="#Node.getAdjacents">O(&#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.getAdjacents">O(&#124;V&#124;)</a></em></td>
+</tr>
+<tr>
+<td><strong>is</strong>Adjacent (using Array)</td>
+<td><em><a href="#Node.getAdjacents">O(&#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.getAdjacents">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>is</strong>Adjacent (using HashSet)</td>
+<td><em>O(1)</em></td>
+<td><em><a href="#Matrix.getAdjacents">O(1)</a></em></td>
+</tr>
+</tbody>
+</table>
+<h1 id="Graphs-Basics">Graphs Basics<a href="#Graphs-Basics" class="headerlink" title="Graphs Basics"></a></h1><!-- http://ccicada.org/wp-content/uploads/2017/06/Community-Detection-with-Hierarchical-Clustering-Algorithms-Feb-3-2017.pdf -->
+<p>A graph is a data structure where a <strong>node</strong> can have zero or more adjacent elements.</p>
+<p>The connection between two nodes is called <strong>edge</strong>. Nodes can also be called <strong>vertices</strong>.</p>
+<img src="/images/graph-parts.jpg" title="Graph is composed of vertices and edges">
+<!-- { img http://btechsmartclass.com/DS/images/Graph%201.png Graph is composed of vertices and edges } -->
+<p>The <strong>degree</strong> is the number of edges connected to a vertex. E.g., the <code>purple</code> vertex has a degree of 3 while the <code>blue</code> one has a degree of 1.</p>
+<p>If the edges are bi-directional, then we have a <strong>undirected graph</strong>. But, if the edges have a direction, then we have a <strong>directed graph</strong> or <strong>di-graph</strong> for short. You can think of it as a one-way street (directed) or two-way street (undirected).</p>
+<!-- image of graph behind a map: edges is POI and edges are the streets -->
+<!-- { img https://koenig-media.raywenderlich.com/uploads/2017/01/graph6.png "Directed and Undirected graphs" } -->
+<img src="/images/directed-vs-undirected-graph.jpg" title="Directed vs Undirected graph">
+<p>Vertex can have edges that go to itself (e.g., <code>blue</code> node), this is called <strong>self-loop</strong>.</p>
+<p>A graph can have <strong>cycles</strong> which means that if you traverse through the node, you could get to the same node more than once. The graph without cycles is called <strong>acyclic graph</strong>.</p>
+<!-- { img http://apprize.info/php/hadoop_1/hadoop_1.files/image190.jpg Acyclic vs Cyclic Graphs } -->
+<img src="/images/cyclic-vs-acyclic-directed-graph.jpg" title="Cyclic vs Acyclic directed graph">
+<p>Also, acyclic undirected graphs are called <strong>tree</strong>. We are going to cover trees in depth in the next post.</p>
+<p>Not all vertices have to be connected in the graph. You might have isolated nodes or even separated subgraphs. If all nodes are has a least one edge, then we have a <strong>connected graph</strong>. When all nodes are connected to all other nodes, then we have a <strong>complete graph</strong>.</p>
+<!-- { img /images/digraph-subgraph.png digraph with isolated subgraphs } -->
+<img src="/images/connected-vs-complete-graph.jpg" title="Complete vs Connected graph">
+<p>For a complete graph, each node has to have <code>#nodes - 1</code> edges. In the previous example we have 7 vertices, so each node has 6 edges.</p>
+<h1 id="Graph-Applications">Graph Applications<a href="#Graph-Applications" class="headerlink" title="Graph Applications"></a></h1><p>When edges have values/cost assigned to them, we say we have a <strong>weighted graph</strong>. If the weight is absent, we can assume it’s 1.</p>
+<img src="/images/airports-weighted-graph.jpg" title="Airports weighted graph">
+<p>Weighted graphs have many applications depending on the domain where you need to solve a problem. To name a few:</p>
+<ul>
+<li><p>Airline Traffic (image above)</p>
+<ul>
+<li>Node/vertex = Airport</li>
+<li>Edges = direct flights between two airports</li>
+<li>Weight = miles between two airports</li>
+</ul>
+</li>
+<li><p>GPS Navigation</p>
+<ul>
+<li>Node = road insersection</li>
+<li>Edge = road</li>
+<li>Weigth = time required to go from one intersection to another</li>
+</ul>
+</li>
+<li><p>Networks routing</p>
+<ul>
+<li>Node = server</li>
+<li>Edge = data link</li>
+<li>Weight = connection speed</li>
+</ul>
+</li>
+</ul>
+<p>In general, graphs have many real-world applications like:</p>
+<ul>
+<li>Electronic circuits</li>
+<li>Flight reservations</li>
+<li>Driving directions</li>
+<li>Telcom: Cell tower frequency planning</li>
+<li>Social networks. E.g., Facebook uses a graph for suggesting friends</li>
+<li>Recommendations: Amazon/Netflix uses graphs to make suggestions products/movies</li>
+<li>Graphs help to plan logistics of delivering goods</li>
+</ul>
+<img src="/images/map-graph.jpg" title="Graph applications: path finder">
+<p>We just learned the basics of graphs and some applications. Let’s learn now how to represent graphs in code.</p>
+<h1 id="Representing-graphs">Representing graphs<a href="#Representing-graphs" class="headerlink" title="Representing graphs"></a></h1><p>Thre are two primary ways of representing graph:</p>
+<ol>
+<li>Adjacency list</li>
+<li>Adjacency Matrix</li>
+</ol>
+<p>Let’s explain it with the following directed graph (digraph) as an example:</p>
+<img src="/images/digraph.png" title="digraph">
+<p>We a digraph with 4 nodes. When a vertex has link to itself (e.g. <code>a</code>) is called <strong>self-loop</strong>.
+<!-- Notice that `a` has **self-loop**. -->
+<!-- img https://www.ida.liu.se/opendsa/OpenDSA/Books/TDDD86_2014/html/_images/GraphRep.png Graph representation: Adjacency list and matrix  --></p>
+<p><strong>Adjacency Matrix</strong></p>
+<p>The adjacency matrix is one way of representing a graph using a two-dimensional array (NxN matrix). In the intersection of nodes, we add 1 (or other weight) if they are connected and <code>0</code> or <code>-</code> if they are not connected.</p>
+<p>Using the same example as before, we can build the following adjacency matrix:</p>
+<figure class="highlight plain"><figcaption><span>Adjacency Matrix</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  a b c d e</div><div class="line">a 1 1 - - -</div><div class="line">b - - 1 - -</div><div class="line">c - - - 1 -</div><div class="line">d - 1 1 - -</div></pre></td></tr></table></figure>
+<p>As you can see, the matrix list all nodes horizontally and vertically. If there a few connections we called <strong>sparse graph</strong> if there are many connections (close to the max number of links) we called it <strong>dense graph</strong>. If all possible connections are reached, then we have a <strong>complete graph</strong>.</p>
+<p>It’s important to notice that for undirected graphs the adjacency matrix will <strong>always</strong> be symmetrical by the diagonal. However, that’s not always the case on a digraph (like our example).</p>
+<p>What is the time complexity of finding connections of two vertices?</p>
+<blockquote>
+<p>Querying if two nodes are connected in an adjacency list is <em>O(1)</em>.</p>
+</blockquote>
+<p><a id="Matrix.space"></a></p>
+<p>What is the space complexity?</p>
+<blockquote>
+<p>Storing a graph as an adjacency list has a space complexity of <em>O(n<sup>2</sup>)</em>, where <code>n</code> is the number of vertices. Also, represented as <em>O(|V|<sup>2</sup>)</em></p>
+</blockquote>
+<p><a id="Matrix.addVertex"></a></p>
+<p>What is the runtime to add a vertex?</p>
+<p>The vertices are stored as a <em><code>V</code></em>x<em><code>V</code></em> matrix. So, everytime a vertex is added, the matrix needs to be reconstructed to a <em><code>V+1</code></em>x<em><code>V+1</code></em>.</p>
+<blockquote>
+<p>Adding a vertex on a adjcency matrix is <em>O(|V|<sup>2</sup>)</em></p>
+</blockquote>
+<p><a id="Matrix.getAdjacents"></a></p>
+<p>What about getting the adjacent nodes?</p>
+<p>Since the matrix has a VxV matrix, to get all the adjacent nodes to a given vertex, we would have to go to the node row and get all its edges with the other nodes.</p>
+<p>In our previous example, let’s say we want all the adjacent nodes to <code>b</code>. We have to get the full row where b with all the other nodes.
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  a b c d e</div><div class="line">b - - 1 - -</div></pre></td></tr></table></figure></p>
+<p>We have to visit all nodes so,</p>
+<blockquote>
+<p>Getting adjacent nodes on an adjacency matrix is <em>O(|V|)</em></p>
+</blockquote>
+<p>Imagine that you need to represent Facebook network as a graph. You would have to create a matrix of 2 billion x 2 billion, where most of it would be empty! Nobody would know everybody else just a few thousands at most.</p>
+<p>In general, we deal with sparse graphs so the matrix will waste a lot of space. That’s why in most implementation we would use an adjacency list rather than the matrix.</p>
+<p><strong>Adjacency List</strong></p>
+<p>Adjacency List is one of the most common ways to represent graphs. Each node has a list of all the nodes connected to it.</p>
+<p>Graphs can be represented as an adjacency list using an Array (or HashMap) containing the nodes. Each of this node entries includes a list (array, linked list, set, etc.) that list its adjacent nodes.</p>
+<p>For instance in the graph above we have that <code>a</code> has an connection to <code>b</code> and also a self-loop to itself. In turn, <code>b</code> has a connection to <code>c</code> and so on:</p>
+<figure class="highlight plain"><figcaption><span>Adjacency List</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a -&gt; &#123; a b &#125;</div><div class="line">b -&gt; &#123; c &#125;</div><div class="line">c -&gt; &#123; d &#125;</div><div class="line">d -&gt; &#123; b c &#125;</div></pre></td></tr></table></figure>
+<p>As you can imagine if you want to know if a node is connected to another node, you would have to go through the list.</p>
+<blockquote>
+<p>Querying if two nodes are connected in an adjacency list is <em>O(n)</em>, where <code>n</code> is the number of vertices. Also represented as <em>O(|V|)</em></p>
+</blockquote>
+<p><a id="List.space"></a></p>
+<p>What about the space complexity?</p>
+<blockquote>
+<p>Storing a graph as an adjacency list has a space complexity of <em>O(n)</em>, where <code>n</code> is the sum of vertices and edges. Also, represented as <em>O(|V| + |E|)</em></p>
+</blockquote>
+<h1 id="Adjacency-List-Graph-HashMap-Implementation">Adjacency List Graph HashMap Implementation<a href="#Adjacency-List-Graph-HashMap-Implementation" class="headerlink" title="Adjacency List Graph HashMap Implementation"></a></h1><p>The adjacency list is the most common way of representing graphs. There are several ways to implement the adjacency list:</p>
+<p>One of the most simple is using a HashMap. The <code>key</code> is the value of the node, and the <code>value</code> is an array of adjacency.</p>
+<figure class="highlight js"><figcaption><span>Adjacency List as a Hashmap</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> graph = &#123;</div><div class="line">  <span class="attr">a</span>: [<span class="string">'a'</span>, <span class="string">'b'</span>],</div><div class="line">  <span class="attr">b</span>: [<span class="string">'c'</span>],</div><div class="line">  <span class="attr">c</span>: [<span class="string">'d'</span>],</div><div class="line">  <span class="attr">d</span>: [<span class="string">'b'</span>, <span class="string">'c'</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Graph usually needs the following operations:</p>
+<ul>
+<li>Add and remove vertices</li>
+<li>Add and remove edges</li>
+</ul>
+<p>Adding and removing vertices involves updating the adjacency list.</p>
+<p>Let’s say that we want to remove the vertex <code>b</code>. We could do <code>delete graph[&#39;b&#39;];</code>, however, we still have to remove the references on the adjacency list on <code>d</code> and <code>a</code>.</p>
+<p>Everytime we remove a node, we would have to iterate through all the nodes’ list <em>O(|V| + |E|)</em>.  Can do better? We will answer that later, first let’s *implement our list in a more object-oriented way so we can swap implementations easily.</p>
+<h1 id="Adjacency-List-Graph-OO-Implementation">Adjacency List Graph OO Implementation<a href="#Adjacency-List-Graph-OO-Implementation" class="headerlink" title="Adjacency List Graph OO Implementation"></a></h1><p>Let’s start with the <code>Node</code> class that holds the vertex’s value and its adjacent vertices. We can also have helper functions for adding and removing adjacent nodes from the list.</p>
+<p><a id="Node.getAdjacents"></a></p>
+<figure class="highlight js"><figcaption><span>Node</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/node.js" target="_blank" rel="external">Commented Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(value) &#123;</div><div class="line">    <span class="keyword">this</span>.value = value;</div><div class="line">    <span class="keyword">this</span>.adjacents = []; <span class="comment">// adjacency list</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  addAdjacent(node) &#123;</div><div class="line marked">    <span class="keyword">this</span>.adjacents.push(node);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  removeAdjacent(node) &#123;</div><div class="line">    <span class="keyword">const</span> index = <span class="keyword">this</span>.adjacents.indexOf(node);</div><div class="line">    <span class="keyword">if</span>(index &gt; <span class="number">-1</span>) &#123;</div><div class="line marked">      <span class="keyword">this</span>.adjacents.splice(index, <span class="number">1</span>);</div><div class="line">      <span class="keyword">return</span> node;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  getAdjacents() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.adjacents;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  isAdjacent(node) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.adjacents.indexOf(node) &gt; <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Notice that <code>adjacent</code> runtime is <em>O(1)</em>, while <code>remove adjacent</code> is <em>O(|E|)</em>. What if instead of an array use a HashSet 🧐? It could be <em>O(1)</em>. But, let first get it working and later we can make it faster.</p>
+<blockquote>
+<p>Make it work. Make it right. Make it faster.</p>
+</blockquote>
+<p>Ok, now that we have the <code>Node</code> class, let’s build the Graph class that can perform operations such as adding/removing vertices and edges.</p>
+<p><strong>Graph.constructor</strong></p>
+<figure class="highlight js"><figcaption><span>Graph.constructor</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Graph</span> </span>&#123;</div><div class="line marked">  <span class="keyword">constructor</span>(edgeDirection = Graph.DIRECTED) &#123;</div><div class="line">    <span class="keyword">this</span>.nodes = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line marked">    <span class="keyword">this</span>.edgeDirection = edgeDirection;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line marked">Graph.UNDIRECTED = <span class="built_in">Symbol</span>(<span class="string">'directed graph'</span>); <span class="comment">// one-way edges</span></div><div class="line marked">Graph.DIRECTED = <span class="built_in">Symbol</span>(<span class="string">'undirected graph'</span>); <span class="comment">// two-ways edges</span></div></pre></td></tr></table></figure>
+<p>The first thing that we need to know is if the graph is directed or undirected. That makes a difference when we are adding edges.</p>
+<p><a id="Graph.addEdge"></a></p>
+<p><strong>Graph.addEdge</strong></p>
+<p>Two add an edge we need two nodes. One is the source, and the other is the destination.</p>
+<figure class="highlight js"><figcaption><span>Graph.addEdge</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">addEdge(source, destination) &#123;</div><div class="line">  <span class="keyword">const</span> sourceNode = <span class="keyword">this</span>.addVertex(source);</div><div class="line">  <span class="keyword">const</span> destinationNode = <span class="keyword">this</span>.addVertex(destination);</div><div class="line"></div><div class="line">  sourceNode.addAdjacent(destinationNode);</div><div class="line"></div><div class="line marked">  <span class="keyword">if</span>(<span class="keyword">this</span>.edgeDirection === Graph.UNDIRECTED) &#123;</div><div class="line">    destinationNode.addAdjacent(sourceNode);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> [sourceNode, destinationNode];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We add an edge from the source vertex to the destination. If we have an undirected graph, then we also add from target node to source since it’s bidirectional.</p>
+<blockquote>
+<p>The runtime of adding an edge from a graph adjacency list is: <em>O(1)</em></p>
+</blockquote>
+<p>If we try to add an edge and the nodes don’t exist, we need to create them first. Let’s do that next!</p>
+<p><a id="Graph.addVertex"></a></p>
+<p><strong>Graph.addVertex</strong></p>
+<!-- If you take a look at the constructor, you will notice that we created a HashMap to hold all the nodes in the graph. We use the hashMap to know if the vertex already exists and get it quickly. -->
+<p>The way we create a node is that we add it to the <code>this.nodes</code> Map. The map store a key/value pair, where the <code>key</code> is the vertex’s value while the map <code>value</code> is the instance of the node class. Take a look at line 5-6:</p>
+<figure class="highlight js"><figcaption><span>Graph.addVertex</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">addVertex(value) &#123;</div><div class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.nodes.has(value)) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.nodes.get(value);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line marked">    <span class="keyword">const</span> vertex = <span class="keyword">new</span> Node(value);</div><div class="line marked">    <span class="keyword">this</span>.nodes.set(value, vertex);</div><div class="line">    <span class="keyword">return</span> vertex;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>If the node already exists we don’t want to overwrite it. So, we first check if it already exists if not then we create it.</p>
+<blockquote>
+<p>The runtime of adding a vertex from a graph adjacency list is: <em>O(1)</em></p>
+</blockquote>
+<p><a id="Graph.removeVertex"></a></p>
+<p><strong>Graph.removeVertex</strong></p>
+<p>Removing a node from the graph, it’s a little bit more involved. We have to check if the node to be deleted it’s in use as an adjacent node.</p>
+<figure class="highlight js"><figcaption><span>Graph.removeVertex</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">removeVertex(value) &#123;</div><div class="line">  <span class="keyword">const</span> current = <span class="keyword">this</span>.nodes.get(value);</div><div class="line">  <span class="keyword">if</span>(current) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> node <span class="keyword">of</span> <span class="keyword">this</span>.nodes.values()) &#123;</div><div class="line marked">      node.removeAdjacent(current);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line marked">  <span class="keyword">return</span> <span class="keyword">this</span>.nodes.delete(value);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We have to through each vertex and then each adjacent node (edges).</p>
+<blockquote>
+<p>The runtime of removing a vertex from a graph adjacency list is: <em>O(|V| + |E|)</em></p>
+</blockquote>
+<p>Finally, let’s remove implement removing an edge!</p>
+<p><a id="Graph.removeEdge"></a></p>
+<p><strong>Graph.removeEdge</strong></p>
+<p>Removing an edge is pretty straightforward and similar to <code>addEdge</code>.</p>
+<figure class="highlight js"><figcaption><span>Graph.removeVertex</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">removeEdge(source, destination) &#123;</div><div class="line">  <span class="keyword">const</span> sourceNode = <span class="keyword">this</span>.nodes.get(source);</div><div class="line">  <span class="keyword">const</span> destinationNode = <span class="keyword">this</span>.nodes.get(destination);</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(sourceNode &amp;&amp; destinationNode) &#123;</div><div class="line marked">    sourceNode.removeAdjacent(destinationNode);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.edgeDirection === Graph.UNDIRECTED) &#123;</div><div class="line marked">      destinationNode.removeAdjacent(sourceNode);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> [sourceNode, destinationNode];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The main difference between <code>addEdge</code> and <code>removeEdge</code> is that:</p>
+<ul>
+<li>If the vertices don’t exist, we won’t create them.</li>
+<li>We use <code>Node.removeAdjacent</code> instead of <code>Node.addAdjacent</code>.</li>
+</ul>
+<p>Since <code>removeAdjacent</code> has to go through all the adjacent vertices we have the following runtime:</p>
+<blockquote>
+<p>The runtime of removing an edge from a graph adjacency list is <em>O(|E|)</em></p>
+</blockquote>
+<p>We are going to explore how to search values from a node.</p>
+<h1 id="Breadth-frirst-search-BFS-Graph-search">Breadth-frirst search (BFS) - Graph search<a href="#Breadth-frirst-search-BFS-Graph-search" class="headerlink" title="Breadth-frirst search (BFS) - Graph search"></a></h1><p>Breadth-first search is a way to navigate a graph from an initial vertex by visiting all the adjacent nodes first.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Breadth-First-Search-Algorithm.gif" title="Breadth First Search in a graph">
+<p>Let’s see how we can accomplish this in code:</p>
+<figure class="highlight js"><figcaption><span>Graph.bfs</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">*bfs(first) &#123;</div><div class="line">  <span class="keyword">const</span> visited = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line marked">  <span class="keyword">const</span> visitList = <span class="keyword">new</span> Queue();</div><div class="line"></div><div class="line">  visitList.add(first);</div><div class="line"></div><div class="line">  <span class="keyword">while</span>(!visitList.isEmpty()) &#123;</div><div class="line">    <span class="keyword">const</span> node = visitList.remove();</div><div class="line">    <span class="keyword">if</span>(node &amp;&amp; !visited.has(node)) &#123;</div><div class="line">      <span class="keyword">yield</span> node;</div><div class="line">      visited.set(node);</div><div class="line">      node.getAdjacents().forEach(<span class="function"><span class="params">adj</span> =&gt;</span> visitList.add(adj));</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>As you can see we are using a <code>Queue</code> where the first node in, is also the first node to be visited (FIFO).</p>
+<p>We are also using <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator" target="_blank" rel="external">JavaScript generators</a>, notice the <code>*</code> in front of the function. We are using a generator to iterate one value at a time. That’s useful for large graphs (millions of nodes) because in most cases you don’t need to visit every single node.</p>
+<p>This an example of how to use the BFS that we just created:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> graph = <span class="keyword">new</span> Graph(Graph.UNDIRECTED);</div><div class="line"></div><div class="line"><span class="keyword">const</span> [first] = graph.addEdge(<span class="number">1</span>, <span class="number">2</span>);</div><div class="line">graph.addEdge(<span class="number">1</span>, <span class="number">3</span>);</div><div class="line">graph.addEdge(<span class="number">1</span>, <span class="number">4</span>);</div><div class="line">graph.addEdge(<span class="number">5</span>, <span class="number">2</span>);</div><div class="line">graph.addEdge(<span class="number">6</span>, <span class="number">3</span>);</div><div class="line">graph.addEdge(<span class="number">7</span>, <span class="number">3</span>);</div><div class="line">graph.addEdge(<span class="number">8</span>, <span class="number">4</span>);</div><div class="line">graph.addEdge(<span class="number">9</span>, <span class="number">5</span>);</div><div class="line">graph.addEdge(<span class="number">10</span>, <span class="number">6</span>);</div><div class="line"></div><div class="line">bfsFromFirst = graph.bfs(first);</div><div class="line"></div><div class="line">bfsFromFirst.next().value.value; <span class="comment">// 1</span></div><div class="line">bfsFromFirst.next().value.value; <span class="comment">// 2</span></div><div class="line">bfsFromFirst.next().value.value; <span class="comment">// 3</span></div><div class="line">bfsFromFirst.next().value.value; <span class="comment">// 4</span></div><div class="line"><span class="comment">// ...</span></div></pre></td></tr></table></figure>
+<p>You can find more examples of usage in the <a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.spec.js" target="_blank" rel="external">test cases</a>. Let’s move on to the DFS!</p>
+<h1 id="Depth-first-search-DFS-Graph-search">Depth-first search (DFS)  - Graph search<a href="#Depth-first-search-DFS-Graph-search" class="headerlink" title="Depth-first search (DFS)  - Graph search"></a></h1><p>Depth-first search is another way to navigate a graph from an initial vertex by recursively the first adjacent node of each vertex found.</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Depth-First-Search.gif" title="Depth First Search in a graph">
+<p>The iterative implementation of a DFS is identical to the BFS, but instead of using a <code>Queue</code> you use a <code>Stack</code>:</p>
+<figure class="highlight js"><figcaption><span>Graph.dfs</span><a href="https://github.com/amejiarosario/algorithms.js/blob/master/lib/data-structures/graphs/graph.js" target="_blank" rel="external">Full Code</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">*dfs(first) &#123;</div><div class="line">  <span class="keyword">const</span> visited = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line marked">  <span class="keyword">const</span> visitList = <span class="keyword">new</span> Stack();</div><div class="line"></div><div class="line">  visitList.add(first);</div><div class="line"></div><div class="line">  <span class="keyword">while</span>(!visitList.isEmpty()) &#123;</div><div class="line">    <span class="keyword">const</span> node = visitList.remove();</div><div class="line">    <span class="keyword">if</span>(node &amp;&amp; !visited.has(node)) &#123;</div><div class="line">      <span class="keyword">yield</span> node;</div><div class="line">      visited.set(node);</div><div class="line">      node.getAdjacents().forEach(<span class="function"><span class="params">adj</span> =&gt;</span> visitList.add(adj));</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We can test our graph as follow.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> graph = <span class="keyword">new</span> Graph(Graph.UNDIRECTED);</div><div class="line"></div><div class="line"><span class="keyword">const</span> [first] = graph.addEdge(<span class="number">1</span>, <span class="number">2</span>);</div><div class="line">graph.addEdge(<span class="number">1</span>, <span class="number">3</span>);</div><div class="line">graph.addEdge(<span class="number">1</span>, <span class="number">4</span>);</div><div class="line">graph.addEdge(<span class="number">5</span>, <span class="number">2</span>);</div><div class="line">graph.addEdge(<span class="number">6</span>, <span class="number">3</span>);</div><div class="line">graph.addEdge(<span class="number">7</span>, <span class="number">3</span>);</div><div class="line">graph.addEdge(<span class="number">8</span>, <span class="number">4</span>);</div><div class="line">graph.addEdge(<span class="number">9</span>, <span class="number">5</span>);</div><div class="line">graph.addEdge(<span class="number">10</span>, <span class="number">6</span>);</div><div class="line"></div><div class="line">dfsFromFirst = graph.dfs(first);</div><div class="line">visitedOrder = <span class="built_in">Array</span>.from(dfsFromFirst);</div><div class="line"><span class="keyword">const</span> values = visitedOrder.map(<span class="function"><span class="params">node</span> =&gt;</span> node.value);</div><div class="line"><span class="built_in">console</span>.log(values); <span class="comment">// [1, 4, 8, 3, 7, 6, 10, 2, 5, 9]</span></div></pre></td></tr></table></figure>
+<p>As you can see the graph is the same on BFS and DFS, however, the order how the nodes were visited is very different. BFS went from 1 to 10 in that order, while DFS went as deep as it could on each node.</p>
+<!--Let's see some applications were DFS and BFS can be useful.
+
+## Find the path in a Graph
+
+Let's say you are exploring your social network and you want to know who can introduce you to Mark Zuckerberg.
+
+{ img /images/you-mark-connections-graph2.png "Friends graph between you and Mark Zuckerberg" %}
+
+You code use a DFS or BFS and iterate until you find the vertex you are looking for (e.g., Mark). That will only tell us if two vertices are **connected**. Let's start with that
+
+{ codeblock Graph.areConnected lang:js mark:6 https://github.com/amejiarosario/algorithms.js/blob/master/src/data-structures/graphs/graph.js Full Code }
+  areConnected(source, destination) {
+    const sourceNode = this.nodes.get(source);
+    const destinationNode = this.nodes.get(destination);
+
+    if(sourceNode && destinationNode) {
+      const bfsFromFirst = this.bfs(sourceNode);
+      for (const node of bfsFromFirst) {
+        if(node === destinationNode) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+{ endcodeblock }
+
+With this function, we get if two nodes are connected or not. However, they don't give us a path.-->
+<h1 id="Graph-Time-and-Space-Complexity">Graph Time and Space Complexity<a href="#Graph-Time-and-Space-Complexity" class="headerlink" title="Graph Time and Space Complexity"></a></h1><p>We have seen some of the basic operations of a Graph. How to add and remove vertices and edges. Here’s a summary of what we have covered so far:</p>
+<!-- Implementation | Space | addVertex | removeVertex | addEdge | removeEdge | getAdjacents | areConnected -->
+<!-- - | - | - | - | - | - | - | - &#124; -->
+<!-- Adjacency List | -->
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Adjacency List</th>
+<th>Adjacency Matrix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Space</td>
+<td><em><a href="#List.space">O(&#124;V&#124; + &#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.space">O(&#124;V&#124;<sup>2</sup>)</a></em></td>
+</tr>
+<tr>
+<td><strong>add</strong>Vertex</td>
+<td><em><a href="#Graph.addVertex">O(1)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(&#124;V&#124;<sup>2</sup>)</a></em></td>
+</tr>
+<tr>
+<td><strong>remove</strong>Vertex</td>
+<td><em><a href="#Graph.removeVertex">O(&#124;V&#124; + &#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(&#124;V&#124;<sup>2</sup>)</a></em></td>
+</tr>
+<tr>
+<td><strong>add</strong>Edge</td>
+<td><em><a href="#Graph.addEdge">O(1)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>remove</strong>Edge (using Array)</td>
+<td><em><a href="#Graph.removeEdge">O(&#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.addVertex">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>remove</strong>Edge (using HashSet)</td>
+<td><em>O(1)</em></td>
+<td><em><a href="#Matrix.addVertex">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>get</strong>Adjacents</td>
+<td><em><a href="#Node.getAdjacents">O(&#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.getAdjacents">O(&#124;V&#124;)</a></em></td>
+</tr>
+<tr>
+<td><strong>is</strong>Adjacent (using Array)</td>
+<td><em><a href="#Node.getAdjacents">O(&#124;E&#124;)</a></em></td>
+<td><em><a href="#Matrix.getAdjacents">O(1)</a></em></td>
+</tr>
+<tr>
+<td><strong>is</strong>Adjacent (using HashSet)</td>
+<td><em>O(1)</em></td>
+<td><em><a href="#Matrix.getAdjacents">O(1)</a></em></td>
+</tr>
+</tbody>
+</table>
+<!-- areConnected | | -->
+<p>As you can see, an adjacency list is faster in almost all functions. The only that the adjacency matrix will outperform the adjacency list is checking if a node is adjacent to other, however, if we change our implementation from Array to a HashSet we can get it in constant time as well :)</p>
+<h1 id="Summary">Summary<a href="#Summary" class="headerlink" title="Summary"></a></h1><p>As we saw, Graphs can help to model many real-life scenarios such as airports, social networks, internet and so on. We covered some of most basic algorithms such as Breadth-First Search (BFS) and Depth-First Search (DFS). Also, we talk about implementations trade-offs such as adjacency list and matrix. There are many other applications that we are going to cover in another post such as finding the shortest path between nodes and different exciting graph algorithms.</p>
+<!-- https://www.slideshare.net/hafsakomal/graphs-49204527 -->
+<!-- https://www.slideshare.net/Abrish06/graph-48747573?next_slideshow=1 -->
+<!-- http://ccicada.org/wp-content/uploads/2017/06/Community-Detection-with-Hierarchical-Clustering-Algorithms-Feb-3-2017.pdf -->
+<!-- https://dreampuf.github.io/GraphvizOnline/ -->
+<!-- http://www.webgraphviz.com/ -->
+<!-- http://graphviz.readthedocs.io/en/stable/examples.html -->
+<!-- https://www.python.org/doc/essays/graphs/ -->
+<!-- Social Network Visualizations -->
+<!-- http://socilab.com/#home -->
+<!-- http://blog.stephenwolfram.com/2012/08/wolframalpha-personal-analytics-for-facebook/ -->
+<!-- https://github.com/trekhleb/javascript-algorithms/tree/master/src/data-structures/graph -->
+<!-- https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/graph/breadth-first-search -->
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;In this post, we are going to explore non-linear data structures like graphs. We are going to cover the central concepts and typical applications.&lt;/p&gt;
+&lt;p&gt;You are probably using programs that use graphs (and trees). Let’s say for instance that you want to know the shortest path between your workplace and home you can use graph algorithms to get the answer! We are going to explore this and other fun challenges.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://adrianmejia.com/categories/Programming/"/>
+    
+      <category term="Data Structures and Algorithms (DSA)" scheme="http://adrianmejia.com/categories/Programming/Data-Structures-and-Algorithms-DSA/"/>
+    
+    
+      <category term="big-o notation" scheme="http://adrianmejia.com/tags/big-o-notation/"/>
+    
+      <category term="algorithms" scheme="http://adrianmejia.com/tags/algorithms/"/>
+    
+      <category term="tutorial_algorithms" scheme="http://adrianmejia.com/tags/tutorial-algorithms/"/>
+    
+  </entry>
   
   <entry>
     <title>Data Structures for Beginners: Arrays, HashMaps, and Lists</title>
@@ -33,8 +442,9 @@
 <li><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Intro to algorithm’s time complexity and Big O notation</a></li>
 <li><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a></li>
 <li>Data Structures for Beginners: Arrays, HashMaps, and Lists <strong>👈 you are here</strong><!-- 1. [Data Structures for Beginners: Arrays, HashMaps, and Lists](/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/) --></li>
-<li><em>Data Structures for Beginners: Trees &amp; Graphs</em> (<strong>coming soon</strong>)<!-- 1. Analysis of Recursive Algorithms **👈 you are here** --></li>
-<li><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Analysis of Recursive Algorithms</a></li>
+<li><a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/">Graph Data Structures for Beginners</a><!-- 1. Graph Data Structures for Beginners **👈 you are here** --></li>
+<li><em>Data Structures for Beginners: Trees</em> (<strong>coming soon</strong>)<!-- 1. Analysis of Recursive Algorithms **👈 you are here** --></li>
+<li><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Apendix I: Analysis of Recursive Algorithms</a></li>
 </ol>
 <hr>
 <h1 id="Data-Structures-Big-O-Cheatsheet">Data Structures Big-O Cheatsheet<a href="#Data-Structures-Big-O-Cheatsheet" class="headerlink" title="Data Structures Big-O Cheatsheet"></a></h1><p>The following table is summary of everything that we are going to cover in this post.</p>
@@ -86,6 +496,14 @@
 <td><em><a href="#Set-Implementation">O(1)</a>*</em></td>
 <td><em><a href="#Set-Implementation">O(1)</a>*</em></td>
 <td>Set using a HashMap implementation. <a href="#Set-Operations-runtime">Details here.</a></td>
+</tr>
+<tr>
+<td><strong>Set</strong> (using list)</td>
+<td><em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.add" target="_blank" rel="external">O(n)</a></em></td>
+<td>-</td>
+<td><em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.has" target="_blank" rel="external">O(n)</a>]</em></td>
+<td><em><a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.delete" target="_blank" rel="external">O(n)</a></em></td>
+<td>Implemented using Binary Search Tree</td>
 </tr>
 <tr>
 <td><strong>Set</strong> (using Binary Search Tree)</td>
@@ -503,7 +921,8 @@ Yay!!! 🎉 we have a much better hash function!</p>
 <h2 id="Set-Implementation">Set Implementation<a href="#Set-Implementation" class="headerlink" title="Set Implementation"></a></h2><p>We could use the JavaScript built-in <code>Set</code>. However, if we implement it ourselves, it’s more obvious to deduct the runtimes. We are going to use the <a href="#HashMapWithRehash">optimized HashMap</a> with rehash functionality.</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> HashMap = <span class="built_in">require</span>(<span class="string">'../hash-maps/hash-map'</span>);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySet</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>() &#123;</div><div class="line">    <span class="keyword">this</span>.hashMap = <span class="keyword">new</span> HashMap();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  add(value) &#123;</div><div class="line">    <span class="keyword">this</span>.hashMap.set(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  has(value) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.has(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  get size() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.size;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">delete</span>(value) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.delete(value);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  entries() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.hashMap.keys.reduce(<span class="function">(<span class="params">acc, key</span>) =&gt;</span> &#123;</div><div class="line">      <span class="keyword">if</span>(key !== <span class="literal">undefined</span>) &#123;</div><div class="line">        acc.push(key.content);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> acc</div><div class="line">    &#125;, []);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>We used <code>HashMap.set</code> to add the set elements without duplicates. We use the key as the value, and since hash maps keys are unique we are all set.</p>
-<p>Checking if an element is already there can be done using the <code>hashMap.has</code> which has an amortized runtime of <em><code>O(1)</code></em>. The most operations would be an amortized constant time except for getting the <code>entries</code> which is  <em><code>O(n)</code></em></p>
+<p>Checking if an element is already there can be done using the <code>hashMap.has</code> which has an amortized runtime of <em><code>O(1)</code></em>. The most operations would be an amortized constant time except for getting the <code>entries</code> which is  <em><code>O(n)</code></em>.</p>
+<p>Note: The JS built-in <code>Set.has</code> has a runtime of <em>O(n)</em>, since it uses a regular list of elements and check each element at a time. You can see the <code>Set.has</code> algorithm <a href="https://www.ecma-international.org/ecma-262/6.0/#sec-set.prototype.has" target="_blank" rel="external">here</a></p>
 <p>Here some examples how to use it:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> assert = <span class="built_in">require</span>(<span class="string">'assert'</span>);</div><div class="line"><span class="comment">// const set = new Set(); // Using the built-in</span></div><div class="line"><span class="keyword">const</span> set = <span class="keyword">new</span> MySet(); <span class="comment">// Using our own implementation</span></div><div class="line"></div><div class="line">set.add(<span class="string">'one'</span>);</div><div class="line">set.add(<span class="string">'uno'</span>);</div><div class="line">set.add(<span class="string">'one'</span>); <span class="comment">// should NOT add this one twice</span></div><div class="line"></div><div class="line">assert.equal(set.has(<span class="string">'one'</span>), <span class="literal">true</span>);</div><div class="line">assert.equal(set.has(<span class="string">'dos'</span>), <span class="literal">false</span>);</div><div class="line"></div><div class="line">assert.equal(set.size, <span class="number">2</span>);</div><div class="line"><span class="comment">// assert.deepEqual(Array.from(set), ['one', 'uno']);</span></div><div class="line"></div><div class="line">assert.equal(set.delete(<span class="string">'one'</span>), <span class="literal">true</span>);</div><div class="line">assert.equal(set.delete(<span class="string">'one'</span>), <span class="literal">false</span>);</div><div class="line">assert.equal(set.has(<span class="string">'one'</span>), <span class="literal">false</span>);</div><div class="line">assert.equal(set.size, <span class="number">1</span>);</div></pre></td></tr></table></figure>
 <p>You should be able to use <code>MySet</code> and the built-in <code>Set</code> interchangeably for this examples.</p>
@@ -940,8 +1359,9 @@ https://www.reddit.com/r/compsci/comments/8m1dx0/data_structures_for_beginners_a
 <li><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Intro to algorithm’s time complexity and Big O notation</a></li>
 <li><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a><!-- 1. Data Structures for Beginners: Arrays, HashMaps, and Lists **👈 you are here** --></li>
 <li><a href="/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/">Data Structures for Beginners: Arrays, HashMaps, and Lists</a></li>
-<li><em>Data Structures for Beginners: Trees &amp; Graphs</em> (<strong>coming soon</strong>)</li>
-<li>Analysis of Recursive Algorithms <strong>👈 you are here</strong><!-- 1. [Analysis of Recursive Algorithms](/blog/2018/04/24/Analysis-of-Recursive-Algorithms/) -->
+<li><a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/">Graph Data Structures for Beginners</a><!-- 1. Graph Data Structures for Beginners **👈 you are here** --></li>
+<li><em>Data Structures for Beginners: Trees</em> (<strong>coming soon</strong>)</li>
+<li>Apendix I: Analysis of Recursive Algorithms <strong>👈 you are here</strong><!-- 1. [Analysis of Recursive Algorithms](/blog/2018/04/24/Analysis-of-Recursive-Algorithms/) -->
 </li>
 </ol>
 <hr>
@@ -1064,7 +1484,7 @@ https://www.reddit.com/r/compsci/comments/8m1dx0/data_structures_for_beginners_a
     <link href="http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/"/>
     <id>http://adrianmejia.com/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/</id>
     <published>2018-04-05T20:10:09.000Z</published>
-    <updated>2018-05-25T12:30:15.543Z</updated>
+    <updated>2018-06-12T21:44:26.707Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Summary">Summary<a href="#Summary" class="headerlink" title="Summary"></a></h1><p>We are going to learn the top algorithm’s running time that every developer should be familiar. Knowing these time complexities will help you to assess if your code will scale. Also, it’s handy to compare different solutions for the same problem. You would be able to estimate which one will perform better.</p>
 <a id="more"></a>
@@ -1140,12 +1560,23 @@ Big O Notation | Name | Example(s)
 <p>This post is part of a tutorial series:</p>
 <p><strong>Learning Data Structures and Algorithms (DSA) for Beginners</strong></p>
 <ol>
-<li><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Intro to algorithm’s time complexity and Big O notation</a></li>
-<li>Eight time complexities that every programmer should know <strong>👈 you are here</strong><!-- 1. [Eight time complexities that every programmer should know](/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/) -->
-<!-- 1. Data Structures for Beginners: Arrays, HashMaps, and Lists **👈 you are here** --></li>
-<li><a href="/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/">Data Structures for Beginners: Arrays, HashMaps, and Lists</a></li>
-<li><em>Data Structures for Beginners: Trees &amp; Graphs</em> (<strong>coming soon</strong>)<!-- 1. Analysis of Recursive Algorithms **👈 you are here** --></li>
-<li><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Analysis of Recursive Algorithms</a></li>
+<li><p><a href="/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/">Intro to algorithm’s time complexity and Big O notation</a></p>
+<!-- 1. Intro to Algorithm's Time Complexity and Big O Notation **👈 you are here** -->
+</li>
+<li><p>Eight time complexities that every programmer should know <strong>👈 you are here</strong></p>
+<!-- 1. [Eight time complexities that every programmer should know](/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/) -->
+</li>
+<li><p><a href="/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/">Data Structures for Beginners: Arrays, HashMaps, and Lists</a></p>
+<!-- 1. Data Structures for Beginners: Arrays, HashMaps, and Lists **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/">Graph Data Structures for Beginners</a></p>
+<!-- 1. Graph Data Structures for Beginners **👈 you are here** -->
+</li>
+<li><p><em>Data Structures for Beginners: Trees</em> (<strong>coming soon</strong>)</p>
+<!-- 1. Analysis of Recursive Algorithms **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Apendix I: Analysis of Recursive Algorithms</a></p>
+</li>
 </ol>
 <hr>
 <!-- table: time complexities -->
@@ -1431,7 +1862,7 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
     <link href="http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/"/>
     <id>http://adrianmejia.com/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/</id>
     <published>2018-04-04T20:16:07.000Z</published>
-    <updated>2018-05-29T17:07:27.260Z</updated>
+    <updated>2018-06-12T21:44:26.707Z</updated>
     
     <content type="html"><![CDATA[<p>As a developer, you have the power to change the world! You can write programs that enable new technologies. You might work in software to find an earlier diagnosis of diseases. Also, you can write programs to free up people’s time to do other amazing things. Whatever you do it has the potential to impact people around you.</p>
 <p>However, these accomplishments are only possible if we write software that is fast and can scale. Learning how to measure your code performance is the goal of this online course.</p>
@@ -1439,13 +1870,25 @@ https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms) -->
 <p>We are going to explore how you can measure your code performance using analysis of algorithms: <strong>time complexity</strong> and <strong>big O notation</strong>. However, first, let’s see a real story to learn why is this important.</p>
 <hr>
 <p>This post is part of a tutorial series:</p>
-<p><strong>Learning Data Structures and Algorithms (DSA) for Beginners</strong></p>
+<p><strong>Learning Data Structures and Algorithms (DSA) for Beginners</strong>
+<!-- 1. [Intro to algorithm's time complexity and Big O notation](/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/) --></p>
 <ol>
-<li>Intro to Algorithm’s Time Complexity and Big O Notation <strong>👈 you are here</strong><!-- 1. [Intro to algorithm's time complexity and Big O notation](/blog/2018/04/04/how-you-can-change-the-world-learning-data-structures-algorithms-free-online-course-tutorial/) --></li>
-<li><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a><!-- 1. Data Structures for Beginners: Arrays, HashMaps, and Lists **👈 you are here** --></li>
-<li><a href="/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/">Data Structures for Beginners: Arrays, HashMaps, and Lists</a></li>
-<li><em>Data Structures for Beginners: Trees &amp; Graphs</em> (<strong>coming soon</strong>)<!-- 1. Analysis of Recursive Algorithms **👈 you are here** --></li>
-<li><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Analysis of Recursive Algorithms</a></li>
+<li><p>Intro to Algorithm’s Time Complexity and Big O Notation <strong>👈 you are here</strong></p>
+</li>
+<li><p><a href="/blog/2018/04/05/most-popular-algorithms-time-complexity-every-programmer-should-know-free-online-tutorial-course/">Eight time complexities that every programmer should know</a></p>
+<!-- 1. Eight time complexities that every programmer should know **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/04/28/Data-Structures-Time-Complexity-for-Beginners-Arrays-HashMaps-Linked-Lists-Stacks-Queues-tutorial/">Data Structures for Beginners: Arrays, HashMaps, and Lists</a></p>
+<!-- 1. Data Structures for Beginners: Arrays, HashMaps, and Lists **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/05/14/Data-Structures-for-Beginners-Graphs-Time-Complexity-tutorial/">Graph Data Structures for Beginners</a></p>
+<!-- 1. Graph Data Structures for Beginners **👈 you are here** -->
+</li>
+<li><p><em>Data Structures for Beginners: Trees</em> (<strong>coming soon</strong>)</p>
+<!-- 1. Analysis of Recursive Algorithms **👈 you are here** -->
+</li>
+<li><p><a href="/blog/2018/04/24/Analysis-of-Recursive-Algorithms/">Apendix I: Analysis of Recursive Algorithms</a></p>
+</li>
 </ol>
 <hr>
 <h1 id="An-algorithm-that-saved-millions-of-lives">An algorithm that saved millions of lives<a href="#An-algorithm-that-saved-millions-of-lives" class="headerlink" title="An algorithm that saved millions of lives"></a></h1><p>During War World II the Germans used <abbr title="AM broadcasting is a radio broadcasting technology, which employs amplitude modulation transmissions.">AM</abbr> signals to communicate with troops around Europe. Anybody with an AM radio and some knowledge of Morse code could intercept the message. However, the information was encoded! All attacked countries tried to decoded by hand. Sometimes they got lucky and were able to make sense of a couple of messages at the end of the day. Unfortunately, The Nazis changed the encoding every single day!</p>
@@ -2321,7 +2764,7 @@ We want to update the variables on <code>blur</code> (when you click somewhere e
     <link href="http://adrianmejia.com/blog/2016/06/25/List-tasks-in-npm-grunt-gulp-and-rake/"/>
     <id>http://adrianmejia.com/blog/2016/06/25/List-tasks-in-npm-grunt-gulp-and-rake/</id>
     <published>2016-06-25T19:14:49.000Z</published>
-    <updated>2018-05-25T12:30:15.542Z</updated>
+    <updated>2018-06-12T21:44:26.707Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">npm run</div><div class="line">yarn run</div><div class="line">grunt --help</div><div class="line">gulp --tasks</div><div class="line">rake --tasks</div></pre></td></tr></table></figure>
 ]]></content>
@@ -4864,219 +5307,6 @@ Sequel::DatabaseConnectionError: Mysql::ClientError::ServerGoneError: The MySQL 
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Get Started with the web crawler Apache Nutch 1.x </title>
-    <link href="http://adrianmejia.com/blog/2012/02/04/get-started-with-the-web-crawler-apache-nutch-1-x/"/>
-    <id>http://adrianmejia.com/blog/2012/02/04/get-started-with-the-web-crawler-apache-nutch-1-x/</id>
-    <published>2012-02-04T05:00:00.000Z</published>
-    <updated>2012-02-04T06:32:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p></p><p>Apache Nutch is an open source <strong>scalable</strong> Web crawler written in Java and based on Lucene/Solr for the indexing and search part.&nbsp;It has a highly modular architecture, allowing developers to create plug-ins for media-type parsing, data retrieval, querying and clustering. [<a href="http://en.wikipedia.org/wiki/Nutch" target="_blank" rel="external">*</a>]</p>
-<a id="more"></a><p></p>
-<h1 id="Motivation">Motivation<a href="#Motivation" class="headerlink" title="Motivation"></a></h1><p><div>
-    By using Nutch, we can find web page hyperlinks in an automated manner, reduce lots of maintenance work, for example checking broken links, and create a copy of all the visited pages for searching over. That&rsquo;s where Apache Solr comes in. Solr is an open source full text search framework, with Solr we can search the visited pages from Nutch. Luckily, integration between Nutch and Solr is pretty straightforward.</div></p>
-<p><div>
-    &nbsp;</div></p>
-<p><div>
-    Whole-web crawling is designed to handle very large crawls which may take weeks to complete, running on multiple machines. This also permits more control over the crawl process, and incremental crawling. It is important to note that whole web crawling does not necessarily mean crawling the entire world wide web. We can limit a whole web crawl to just a list of the URLs we want to crawl. This is done by using a filter just like we the one we used when we did the crawl command. [<a href="http://wiki.apache.org/nutch/NutchTutorial" target="_blank" rel="external">*</a>]</div></p>
-<p><div>
-    &nbsp;</div></p>
-<p><div>
-    Some of the advantages of Nutch, when compared to a simple Fetcher</div></p>
-<ul>
-    <li>
-        highly scalable and relatively feature rich crawler</li>
-    <li>
-        features like politeness which obeys robots.txt rules</li>
-    <li>
-        robust and scalable - you can run Nutch on a cluster of 100 machines</li>
-    <li>
-        quality - you can bias the crawling to fetch &ldquo;important&rdquo; pages first</li>
-</ul>
-
-<h2 id="Basics-about-Nutch">Basics about Nutch<a href="#Basics-about-Nutch" class="headerlink" title="Basics about Nutch"></a></h2><p>First you need to know that, Nutch data is composed of:</p>
-<ul>
-<li>The crawl database, or <strong>crawldb</strong>. This contains information about every url known to Nutch, including whether it was fetched, and, if so, when.</li>
-<li>The link database, or <strong>linkdb</strong>. This contains the list of known links to each url, including both the source url and anchor text of the link.</li>
-<li>A set of <strong>segments</strong>. Each segment is a set of urls that are fetched as a unit. Segments are directories with the following subdirectories:</li>
-</ul>
-<ol>
-<li><strong>crawl_generate</strong> names a set of urls to be fetche</li>
-<li><strong>crawl_fetch</strong> contains the status of fetching each url</li>
-<li><strong>content</strong> contains the raw content retrieved from each url</li>
-<li><strong>parse_text</strong> contains the parsed text of each url</li>
-<li><strong>parse_data</strong> contains outlinks and metadata parsed from each url</li>
-<li><strong>crawl_parse</strong> contains the outlink urls, used to update the crawldb</li>
-</ol>
-<h2 id="Nutch-and-Hadoop">Nutch and Hadoop<a href="#Nutch-and-Hadoop" class="headerlink" title="Nutch and Hadoop"></a></h2><p>As of the official Nutch 1.3 release the source code architecture has been greatly simplified to allow us to run Nutch in one of two modes; namely local and deploy. By default, Nutch no longer comes with a Hadoop distribution, however when run in local mode e.g. running Nutch in a single process on one machine, then we use Hadoop as a dependency. This may suit you fine if you have a small site to crawl and index, but most people choose Nutch because of its capability to run on in deploy mode, within a Hadoop cluster. This gives you the benefit of a distributed file system (HDFS) and MapReduce processing style. &nbsp;If you are interested in deployed mode <a href="http://wiki.apache.org/nutch/NutchHadoopTutorial" target="_blank">read here</a>.</p>
-<h1 id="Getting-hands-dirt-with-Nutch">Getting hands dirt with Nutch<a href="#Getting-hands-dirt-with-Nutch" class="headerlink" title="Getting hands dirt with Nutch"></a></h1><h2 id="Setup-Nutch-from-binary-distribution">Setup Nutch from binary distribution<a href="#Setup-Nutch-from-binary-distribution" class="headerlink" title="Setup Nutch from binary distribution"></a></h2><p><ol>
-    <li>
-        Unzip your binary Nutch package to $HOME/nutch-1.3</li>
-    <li>
-        cd $HOME/nutch-1.3/runtime/local</li>
-    <li>
-        From now on, we are going to use ${NUTCH_RUNTIME_HOME} to refer to the current directory.</li>
-</ol></p>
-<p><div>
-    &nbsp;</div></p>
-<div>
-
-<h2 id="Verify-your-Nutch-installation">Verify your Nutch installation<a href="#Verify-your-Nutch-installation" class="headerlink" title="Verify your Nutch installation"></a></h2><p><ol>
-    <li>
-        run &quot;bin/nutch&quot;</li>
-    <li>
-        You can confirm a correct installation if you seeing the following: &nbsp;Usage: nutch [-core] COMMAND</li>
-</ol></p>
-<p><div>
-    <u>Some troubleshooting tips:</u></div></p>
-<p><div>
-    Run the following command if you are seeing &quot;Permission denied&quot;:</div></p>
-<p><div>
-    chmod +x bin/nutch</div></p>
-<p><div>
-    Setup JAVA_HOME if you are seeing JAVA_HOME not set. On Mac, you can run the following command or add it to ~/.bashrc:</div></p>
-<p><div>
-    export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home #mac</div></p>
-<p><div>
-    Ubuntu:</div></p>
-<p><div>
-    export JAVA_HOME=/usr/lib/jvm/java-1.6.0-openjdk&nbsp;</div></p>
-<p><div>
-    export NUTCH_HOME=/var/www/nutch-1.3/runtime/local</div></p>
-<p><div>
-    &nbsp;</div></p>
-<p><div>
-    <u>Example of using Nutch to crawl wikipedia pages:</u></div></p>
-<p><div>
-    Here we are try to crawl&nbsp;<span class="s2"><a href="http://en.wikipedia.org/wiki/Collective_intelligence" target="_blank" rel="external">http://en.wikipedia.org/wiki/Collective_intelligence</a>&nbsp;and sublinks in the same domain.</span></div></p>
-<p><ol class="ol1">
-    <li class="li1">
-        $ cd NUTCH_HOME/runtime/local</li>
-    <li class="li2">
-        <span class="s1">$ echo &quot;<a href="http://en.wikipedia.org/wiki/Collective_intelligence" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Collective_intelligence</span></a>&quot; &gt; urls</span></li>
-    <li class="li1">
-        add: <code>+^http://([a-z0-9]*\.)*wikipedia.org/</code> in&nbsp;conf/regex-urlfilter.txt</li>
-    <li class="li1">
-        $ bin/nutch crawl urls -dir crawl-wiki-ci -depth 2</li>
-    <li class="li1">
-        <b>statistics associated with the crawldb</b>
-        <ol class="ol1">
-            <li class="li1">
-                $ nutch readdb crawl-wiki-ci/crawldb/ -stats
-                <ol class="ol1">
-                    <li class="li1">
-                        CrawlDb statistics start: crawl-wiki-ci/crawldb/Statistics for CrawlDb: crawl-wiki-ci/crawldb/<br>
-                        TOTAL urls:&nbsp;&nbsp;&nbsp;&nbsp; 2727<br>
-                        retry 0:&nbsp;&nbsp;&nbsp;&nbsp; 2727<br>
-                        min score:&nbsp;&nbsp;&nbsp;&nbsp; 0.0<br>
-                        avg score:&nbsp;&nbsp;&nbsp;&nbsp; 8.107811E-4<br>
-                        max score:&nbsp;&nbsp;&nbsp;&nbsp; 1.341<br>
-                        status 1 (db_unfetched):&nbsp;&nbsp;&nbsp;&nbsp; 2665<br>
-                        status 2 (db_fetched):&nbsp;&nbsp;&nbsp;&nbsp; 61<br>
-                        status 3 (db_gone):&nbsp;&nbsp;&nbsp;&nbsp; 1<br>
-                        CrawlDb statistics: done</li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-    <li class="li1">
-        <b>Dump of the URLs from the crawldb</b>
-        <ol class="ol1">
-            <li class="li1">
-                $ nutch readdb crawl-wiki-ci/crawldb/ -dump crawl-wiki-ci/stats
-                <ol class="ol1">
-                    <li class="li1">
-                        <span class="s3"><a href="http://en.wikipedia.org/wiki/Special:RecentChangesLinked/MIT_Center_for_Collective_Intelligence" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Special:RecentChangesLinked/MIT_Center_for_Collective_Intelligence</span></a></span>&nbsp;&nbsp;&nbsp;&nbsp; Version: 7Status: 1 (db_unfetched)<br>
-                        Fetch time: Sat Feb 04 00:50:50 EST 2012<br>
-                        Modified time: Wed Dec 31 19:00:00 EST 1969<br>
-                        Retries since fetch: 0<br>
-                        Retry interval: 2592000 seconds (30 days)<br>
-                        Score: 1.9607843E-4<br>
-                        Signature: null<br>
-                        Metadata:<br>
-                        &hellip;.&nbsp;</li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-    <li class="li1">
-        <b>Top 10 highest rate links</b>
-        <ol class="ol1">
-            <li class="li1">
-                $ nutch readdb crawl-wiki-ci/crawldb/ -topN 10 crawl-wiki-ci/stats/top10/
-                <ol class="ol1">
-                    <li class="li2">
-                        <span class="s1">1.3416613&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Collective_intelligence" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Collective_intelligence</span></a>0.030499997&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Howard_Bloom" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Howard_Bloom</span></a><br>
-                        0.02763889&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Groupthink" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Groupthink</span></a><br>
-                        0.02591739&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Wikipedia" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Wikipedia</span></a><br>
-                        0.024347823&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Pierre_L%C3%A9vy_(philosopher)" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Pierre<em>L%C3%A9vy</em>(philosopher)</span></a><br>
-                        0.023733648&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Wikipedia:Citation_needed" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Wikipedia:Citation_needed</span></a><br>
-                        0.017142152&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/w/opensearch_desc.php" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/w/opensearch_desc.php</span></a><br>
-                        0.016599996&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Artificial_intelligence" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Artificial_intelligence</span></a><br>
-                        0.016499996&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Consensus_decision_making" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Consensus_decision_making</span></a><br>
-                        0.015199998&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://en.wikipedia.org/wiki/Group_selection" target="_blank" rel="external"><span class="s2">http://en.wikipedia.org/wiki/Group_selection</span></a></span></li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-    <li class="li1">
-        <b>Dump of a Nutch segment</b>
-        <ol class="ol1">
-            <li class="li1">
-                $ nutch readseg -dump crawl-wiki-ci/segments/20120204004509/ crawl-wiki-ci/stats/segments
-                <ol class="ol1">
-                    <li class="li1">
-                        CrawlDatum::Version: 7<br>
-                        Status: 1 (db_unfetched)<br>
-                        Fetch time: Sat Feb 04 00:45:03 EST 2012<br>
-                        Modified time: Wed Dec 31 19:00:00 EST 1969<br>
-                        Retries since fetch: 0<br>
-                        Retry interval: 2592000 seconds (30 days)<br>
-                        Score: 1.0<br>
-                        Signature: null<br>
-                        Metadata: <em>ngt</em>: 1328334307529</li>
-                    <li class="li1">
-                        <br>
-                        Content::<br>
-                        Version: -1<br>
-                        url: <a href="http://en.wikipedia.org/wiki/Collective_intelligence" target="_blank" rel="external"><span class="s4">http://en.wikipedia.org/wiki/Collective_intelligence</span></a><br>
-                        base: <a href="http://en.wikipedia.org/wiki/Collective_intelligence" target="_blank" rel="external"><span class="s4">http://en.wikipedia.org/wiki/Collective_intelligence</span></a><br>
-                        contentType: application/xhtml+xml<br>
-                        metadata: Content-Language=en Age=52614 Content-Length=29341 Last-Modified=Sat, 28 Jan 2012 17:27:22 GMT <em>fst</em>=33 nutch.segment.name=20120204004509 Connection=close X-Cache-Lookup=MISS from <a href="http://sq72.wikimedia.org/" target="_blank" rel="external"><span class="s4">sq72.wikimedia.org:80</span></a> Server=Apache X-Cache=MISS from <a href="http://sq72.wikimedia.org/" target="_blank" rel="external"><span class="s4">sq72.wikimedia.org</span></a> X-Content-Type-Options=nosniff Cache-Control=private, s-maxage=0, max-age=0, must-revalidate Vary=Accept-Encoding,Cookie Date=Fri, 03 Feb 2012 15:08:18 GMT Content-Encoding=gzip nutch.crawl.score=1.0 Content-Type=text/html; charset=UTF-8<br>
-                        Content:<br>
-                        &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" target="_blank" rel="external"><span class="s4">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</span></a>&quot;&gt;<br>
-                        &lt;html lang=&quot;en&quot; dir=&quot;ltr&quot; class=&quot;client-nojs&quot; xmlns=&quot;<a href="http://www.w3.org/1999/xhtml" target="_blank" rel="external"><span class="s4">http://www.w3.org/1999/xhtml</span></a>&quot;&gt;<br>
-                        &lt;head&gt;<br>
-                        &lt;title&gt;Collective intelligence - Wikipedia, the free encyclopedia&lt;/title&gt;<br>
-                        &lt;meta &hellip;.<b>&nbsp;</b></li>
-                </ol>
-            </li>
-        </ol>
-    </li>
-</ol></p>
-<p></p><p class="li1">&nbsp;</p><p></p>
-<p></p><p class="li1"><b>References:</b></p><p></p>
-<ul>
-    <li class="li1">
-        <a href="http://wiki.apache.org/nutch/NutchTutorial" target="_blank" rel="external">http://wiki.apache.org/nutch/NutchTutorial</a></li>
-    <li class="li1">
-        <a href="http://en.wikipedia.org/wiki/Nutch" target="_blank" rel="external">http://en.wikipedia.org/wiki/Nutch</a></li>
-</ul>
-</div>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;p&gt;Apache Nutch is an open source &lt;strong&gt;scalable&lt;/strong&gt; Web crawler written in Java and based on Lucene/Solr for the indexing and search part.&amp;nbsp;It has a highly modular architecture, allowing developers to create plug-ins for media-type parsing, data retrieval, querying and clustering. [&lt;a href=&quot;http://en.wikipedia.org/wiki/Nutch&quot;&gt;*&lt;/a&gt;]&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Technologies" scheme="http://adrianmejia.com/categories/Technologies/"/>
-    
-    
-      <category term="web crawlers" scheme="http://adrianmejia.com/tags/web-crawlers/"/>
     
   </entry>
   
