@@ -475,26 +475,25 @@ You are probably using programs that use graphs (and trees). Let’s say for ins
 <p>We a digraph with 4 nodes. When a vertex has link to itself (e.g. <code>a</code>) is called <strong>self-loop</strong>.
 <!-- Notice that `a` has **self-loop**. -->
 <!-- img https://www.ida.liu.se/opendsa/OpenDSA/Books/TDDD86_2014/html/_images/GraphRep.png Graph representation: Adjacency list and matrix  --></p>
-<p><strong>Adjacency Matrix</strong></p>
-<p>The adjacency matrix is one way of representing a graph using a two-dimensional array (NxN matrix). In the intersection of nodes, we add 1 (or other weight) if they are connected and <code>0</code> or <code>-</code> if they are not connected.</p>
+<h2 id="Adjacency-Matrix">Adjacency Matrix<a href="#Adjacency-Matrix" class="headerlink" title="Adjacency Matrix"></a></h2><p>The adjacency matrix is one way of representing a graph using a two-dimensional array (NxN matrix). In the intersection of nodes, we add 1 (or other weight) if they are connected and <code>0</code> or <code>-</code> if they are not connected.</p>
 <p>Using the same example as before, we can build the following adjacency matrix:</p>
 <figure class="highlight plain"><figcaption><span>Adjacency Matrix</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  a b c d e</div><div class="line">a 1 1 - - -</div><div class="line">b - - 1 - -</div><div class="line">c - - - 1 -</div><div class="line">d - 1 1 - -</div></pre></td></tr></table></figure>
 <p>As you can see, the matrix list all nodes horizontally and vertically. If there a few connections we called <strong>sparse graph</strong> if there are many connections (close to the max number of links) we called it <strong>dense graph</strong>. If all possible connections are reached, then we have a <strong>complete graph</strong>.</p>
 <p>It’s important to notice that for undirected graphs the adjacency matrix will <strong>always</strong> be symmetrical by the diagonal. However, that’s not always the case on a digraph (like our example).</p>
 <p>What is the time complexity of finding connections of two vertices?</p>
 <blockquote>
-<p>Querying if two nodes are connected in an adjacency list is <em>O(1)</em>.</p>
+<p>Querying if two nodes are connected in an adjacency matrix is <em>O(1)</em>.</p>
 </blockquote>
 <p><a id="Matrix.space"></a></p>
 <p>What is the space complexity?</p>
 <blockquote>
-<p>Storing a graph as an adjacency list has a space complexity of <em>O(n<sup>2</sup>)</em>, where <code>n</code> is the number of vertices. Also, represented as <em>O(|V|<sup>2</sup>)</em></p>
+<p>Storing a graph as an adjacency matrix has a space complexity of <em>O(n<sup>2</sup>)</em>, where <code>n</code> is the number of vertices. Also, represented as <em>O(|V|<sup>2</sup>)</em></p>
 </blockquote>
 <p><a id="Matrix.addVertex"></a></p>
 <p>What is the runtime to add a vertex?</p>
 <p>The vertices are stored as a <em><code>V</code></em>x<em><code>V</code></em> matrix. So, everytime a vertex is added, the matrix needs to be reconstructed to a <em><code>V+1</code></em>x<em><code>V+1</code></em>.</p>
 <blockquote>
-<p>Adding a vertex on a adjcency matrix is <em>O(|V|<sup>2</sup>)</em></p>
+<p>Adding a vertex on a adjacency matrix is <em>O(|V|<sup>2</sup>)</em></p>
 </blockquote>
 <p><a id="Matrix.getAdjacents"></a></p>
 <p>What about getting the adjacent nodes?</p>
@@ -507,8 +506,7 @@ You are probably using programs that use graphs (and trees). Let’s say for ins
 </blockquote>
 <p>Imagine that you need to represent Facebook network as a graph. You would have to create a matrix of 2 billion x 2 billion, where most of it would be empty! Nobody would know everybody else just a few thousands at most.</p>
 <p>In general, we deal with sparse graphs so the matrix will waste a lot of space. That’s why in most implementation we would use an adjacency list rather than the matrix.</p>
-<p><strong>Adjacency List</strong></p>
-<p>Adjacency List is one of the most common ways to represent graphs. Each node has a list of all the nodes connected to it.</p>
+<h2 id="Adjacency-List">Adjacency List<a href="#Adjacency-List" class="headerlink" title="Adjacency List"></a></h2><p>Adjacency List is one of the most common ways to represent graphs. Each node has a list of all the nodes connected to it.</p>
 <p>Graphs can be represented as an adjacency list using an Array (or HashMap) containing the nodes. Each of this node entries includes a list (array, linked list, set, etc.) that list its adjacent nodes.</p>
 <p>For instance in the graph above we have that <code>a</code> has an connection to <code>b</code> and also a self-loop to itself. In turn, <code>b</code> has a connection to <code>c</code> and so on:</p>
 <figure class="highlight plain"><figcaption><span>Adjacency List</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a -&gt; &#123; a b &#125;</div><div class="line">b -&gt; &#123; c &#125;</div><div class="line">c -&gt; &#123; d &#125;</div><div class="line">d -&gt; &#123; b c &#125;</div></pre></td></tr></table></figure>
@@ -909,7 +907,7 @@ With this function, we get if two nodes are connected or not. However, they don'
 
           
             <h3 class="toc-title">Contents</h3>
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graphs-Basics"><span class="toc-number">1.</span> <span class="toc-text">Graphs Basics</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Applications"><span class="toc-number">2.</span> <span class="toc-text">Graph Applications</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Representing-graphs"><span class="toc-number">3.</span> <span class="toc-text">Representing graphs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Adjacency-List-Graph-HashMap-Implementation"><span class="toc-number">4.</span> <span class="toc-text">Adjacency List Graph HashMap Implementation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Adjacency-List-Graph-OO-Implementation"><span class="toc-number">5.</span> <span class="toc-text">Adjacency List Graph OO Implementation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Breadth-frirst-search-BFS-Graph-search"><span class="toc-number">6.</span> <span class="toc-text">Breadth-frirst search (BFS) - Graph search</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Depth-first-search-DFS-Graph-search"><span class="toc-number">7.</span> <span class="toc-text">Depth-first search (DFS)  - Graph search</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Time-and-Space-Complexity"><span class="toc-number">8.</span> <span class="toc-text">Graph Time and Space Complexity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Summary"><span class="toc-number">9.</span> <span class="toc-text">Summary</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Graphs-Basics"><span class="toc-number">1.</span> <span class="toc-text">Graphs Basics</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Applications"><span class="toc-number">2.</span> <span class="toc-text">Graph Applications</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Representing-graphs"><span class="toc-number">3.</span> <span class="toc-text">Representing graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Adjacency-Matrix"><span class="toc-number">3.1.</span> <span class="toc-text">Adjacency Matrix</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adjacency-List"><span class="toc-number">3.2.</span> <span class="toc-text">Adjacency List</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Adjacency-List-Graph-HashMap-Implementation"><span class="toc-number">4.</span> <span class="toc-text">Adjacency List Graph HashMap Implementation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Adjacency-List-Graph-OO-Implementation"><span class="toc-number">5.</span> <span class="toc-text">Adjacency List Graph OO Implementation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Breadth-frirst-search-BFS-Graph-search"><span class="toc-number">6.</span> <span class="toc-text">Breadth-frirst search (BFS) - Graph search</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Depth-first-search-DFS-Graph-search"><span class="toc-number">7.</span> <span class="toc-text">Depth-first search (DFS)  - Graph search</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Graph-Time-and-Space-Complexity"><span class="toc-number">8.</span> <span class="toc-text">Graph Time and Space Complexity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Summary"><span class="toc-number">9.</span> <span class="toc-text">Summary</span></a></li></ol>
 
             <!-- 300x600 -->
             <!---->
@@ -966,8 +964,8 @@ With this function, we get if two nodes are connected or not. However, they don'
       <div class="container">
         <div class="p-y-2">
           &copy; 2018 <a href="http://adrianmejia.com">Adrian Mejia</a>
-          <span class="muted m-x-4" title="Tue Jun 12 2018 17:46:02 GMT-0400 (EDT)">
-            v.pa8cgq
+          <span class="muted m-x-4" title="Wed Jun 13 2018 20:15:15 GMT-0400 (EDT)">
+            v.paae1f
           </span>
         </div>
       </div>
